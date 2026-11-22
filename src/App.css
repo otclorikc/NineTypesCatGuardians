@@ -1,84 +1,959 @@
+
+
 /* =========================
-   测试页修正
-   进度条 / 猫咪提示框 / 上一题按钮
+
+全站与扉页
+
 ========================= */
 
+
+
+.app{
+
+width:100%;
+
+min-height:100vh;
+
+overflow:hidden;
+
+}
+
+
+
+.cover{
+
+position:relative;
+
+width:100%;
+
+overflow:hidden;
+
+background:#201b15;
+
+}
+
+
+
+.cover--pc{
+
+display:block;
+
+width:100%;
+
+height:100vh;
+
+min-height:600px;
+
+aspect-ratio:1440/900;
+
+}
+
+
+
+.cover--mobile{
+
+display:none;
+
+}
+
+
+
+.cover__background{
+
+position:absolute;
+
+inset:0;
+
+width:100%;
+
+height:100%;
+
+object-fit:fill;
+
+}
+
+
+
+.cover__logo{
+
+position:absolute;
+
+z-index:2;
+
+left:10.42%;
+
+top:8.67%;
+
+width:42.13%;
+
+height:auto;
+
+transform:rotate(-1.6deg);
+
+}
+
+
+
+.cover__popover{
+
+position:absolute;
+
+z-index:3;
+
+width:34%;
+
+left:33%;
+
+bottom:8%;
+
+}
+
+
+
+.cover__popover-image{
+
+display:block;
+
+width:100%;
+
+height:auto;
+
+}
+
+
+
+.cover__popover-copy{
+
+position:absolute;
+
+inset:10%5%8%;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+color:#65471a;
+
+text-align:center;
+
+font-family:"Noto Sans SC",sans-serif;
+
+}
+
+
+
+.cover__popover-title{
+
+margin:0010px;
+
+font-size:clamp(15px,1.4vw,21px);
+
+font-weight:700;
+
+}
+
+
+
+.cover__popover-line{
+
+margin:3px0;
+
+font-size:clamp(10px,0.9vw,13px);
+
+}
+
+
+
+.cover__shop-name{
+
+position:absolute;
+
+z-index:2;
+
+left:0;
+
+right:0;
+
+bottom:3%;
+
+text-align:center;
+
+color:#f3dfb3;
+
+letter-spacing:5px;
+
+font-size:16px;
+
+}
+
+
+
+.cover__mirror-light{
+
+position:absolute;
+
+z-index:4;
+
+pointer-events:none;
+
+top:0;
+
+bottom:0;
+
+left:0;
+
+width:26%;
+
+opacity:0;
+
+background:linear-gradient(
+
+90deg,
+
+transparent,
+
+rgba(255,255,255,0.32),
+
+rgba(255,255,255,0.26),
+
+transparent
+
+);
+
+animation: mirrorSweep2sease-in-outinfinite;
+
+}
+
+
+
+@keyframesmirrorSweep{
+
+0% {
+
+transform:translateX(0);
+
+opacity:0;
+
+}
+
+35% {
+
+opacity:0.32;
+
+}
+
+65% {
+
+opacity:0.26;
+
+}
+
+100% {
+
+transform:translateX(360%);
+
+opacity:0;
+
+}
+
+}
+
+
+
+.cover__start-area{
+
+position:absolute;
+
+z-index:8;
+
+inset:0;
+
+width:100%;
+
+height:100%;
+
+border:0;
+
+padding:0;
+
+background:transparent;
+
+cursor:pointer;
+
+}
+
+
+
+/* =========================
+
+答题页基础
+
+========================= */
+
+
+
+
+
+
+
+/* =========================
+
+猫咪图标
+
+========================= */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+
+进度条
+
+========================= */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+
+PC题目卡片
+
+========================= */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+
+提交弹窗
+
+========================= */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+
+Tablet / PC自适应
+
+========================= */
+
+
+
+@media(min-width:601px) {
+
+
+
+}
+
+
+
+/* =========================
+
+Mobile扉页
+
+========================= */
+
+
+
+@media(max-width:600px) {
+
+.cover--pc{
+
+display:none;
+
+}
+
+
+
+.cover--mobile{
+
+display:block;
+
+width:100%;
+
+height:100svh;
+
+min-height:650px;
+
+max-height:100svh;
+
+aspect-ratio:390/844;
+
+}
+
+
+
+.cover__logo{
+
+width:65%;
+
+left:17.5%;
+
+top:5%;
+
+}
+
+
+
+.cover__enter{
+
+position:absolute;
+
+z-index:5;
+
+width:28%;
+
+height:auto;
+
+left:36%;
+
+top:46%;
+
+pointer-events:none;
+
+}
+
+
+
+.cover__support{
+
+position:absolute;
+
+z-index:4;
+
+left:50%;
+
+bottom:5.5%;
+
+transform:translateX(-50%);
+
+width:calc(100%-38px);
+
+height:38px;
+
+}
+
+
+
+.cover__support-frame{
+
+position:absolute;
+
+inset:0;
+
+border-radius:10px;
+
+background:rgba(255,255,255,0.21);
+
+}
+
+
+
+.cover__support-copy{
+
+position:absolute;
+
+inset:0;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+justify-content:center;
+
+color:#65471a;
+
+font-family:"Noto Sans SC",sans-serif;
+
+font-size:10px;
+
+line-height:14px;
+
+white-space:nowrap;
+
+}
+
+
+
+.cover__support-line{
+
+margin:0;
+
+}
+
+
+
+.cover__support-line--first{
+
+order:2;
+
+}
+
+
+
+.cover__support-line--second{
+
+order:1;
+
+}
+
+
+
+/* Mobile答题页 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+@media(max-width:600px) {
+
+
+
+
+
+
+
+
+
+
+
+}
+
+@media(min-width:601px) {
+
+.cover--pc{
+
+width:100%;
+
+height:100vh;
+
+height:100dvh;
+
+min-height:0;
+
+aspect-ratio:auto;
+
+}
+
+
+
+
+
+
+
+
+
+}
+
+@media(max-width:600px) {
+
+.cover--mobile{
+
+width:100%;
+
+height:100vh;
+
+height:100dvh;
+
+min-height:0;
+
+max-height:none;
+
+}
+
+
+
+
+
+}
+
+/* ================================
+
+提交确认弹窗：PC + Mobile
+
+================================ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* PC */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Mobile */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media(max-width:600px) {
+
+
+
+
+
+
+
+}
+
+
+
+@media(min-width:601px) {
+
+
+
+}
+
+/* Mobile答题页面：恢复固定布局 */
+
+@media(max-width:600px) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+/* =========================
+
+测试页修正
+
+进度条 / 猫咪提示框 / 上一题按钮
+
+========================= */
+
+
+
 /* PC：猫咪图文分离 */
-.quiz__cat {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
 
-.quiz__cat::before {
-  display: block;
-}
 
-.quiz__cat img {
-  position: relative;
-  z-index: 1;
-  width: 44.5%;
-  height: 100%;
-  object-fit: contain;
-}
 
-.quiz__cat-label {
-  position: absolute;
-  z-index: 2;
-  top: 42.5%;
-  right: 0;
-  left: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 54.2%;
-  height: 30.7%;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0 8px;
-  font-size: clamp(13px, 1.39vw, 20px);
-  font-weight: 700;
-  line-height: 1.2;
-  text-align: center;
-  white-space: nowrap;
-  pointer-events: none;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* PC：进度条背景 */
-.quiz__progress {
-  isolation: isolate;
-  height: 72px;
-  min-height: 0;
-}
 
-.quiz__progress-bg {
-  display: block;
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  border: 1px solid rgba(222, 197, 151, 0.7);
-  border-radius: 12px;
-  background: linear-gradient(
-    180deg,
-    rgba(54, 43, 30, 0.82),
-    rgba(38, 31, 23, 0.76)
-  );
-  box-shadow: 0 3px 12px rgba(35, 25, 14, 0.16);
-}
 
-.quiz__progress-content {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
+
+
+
+
+
+
+
+
+
+
 
 /* PC：上一题按钮回到题目卡片内部 */
-.quiz__previous {
-  top: 8%;
-  right: 7%;
-  z-index: 5;
-}
+
+
+
 
 /* =========================
    Mobile 测试页
@@ -87,300 +962,11 @@
 @media (max-width: 600px) {
 
   /* 保留原有猫咪位置 */
-  .quiz__cat {
-    top: 80px;
-    right: 21px;
-    left: auto;
-    width: 178px;
-    height: 69.7px;
-  }
+  
 
   /* 猫咪文字半透明底框 */
-  .quiz__cat::before {
-    display: block;
-    top: 51.65%;
-    right: 2.25%;
-    bottom: 32.56%;
-    left: 45.51%;
-    width: auto;
-    height: auto;
-    border-radius: 5px;
-    background: rgba(197, 214, 255, 0.2);
-  }
+  
 
-  .quiz__cat img {
-    position: absolute;
-    z-index: 1;
-    top: 11.48%;
-    left: -2.81%;
-    width: 42.7%;
-    height: 94.7%;
-    max-width: none;
-    object-fit: contain;
-  }
+  
 
-  .quiz__cat-label {
-    z-index: 2;
-    top: 51.65%;
-    right: 2.25%;
-    bottom: 32.56%;
-    left: 45.51%;
-    width: auto;
-    height: auto;
-    padding: 0;
-    font-size: 10px;
-    line-height: 12px;
-    font-weight: 700;
-    white-space: nowrap;
-    text-align: center;
-    transform: none;
-  }
-
-  /* Mobile：进度条背景 */
-  .quiz__progress {
-    top: 136px;
-    left: 0;
-    width: 100%;
-    height: 43px;
-    min-height: 0;
-    transform: none;
-  }
-
-  .quiz__progress-bg {
-    display: block;
-    border-right: 0;
-    border-left: 0;
-    border-radius: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(54, 43, 30, 0.82),
-      rgba(38, 31, 23, 0.76)
-    );
-  }
-
-  .quiz__progress-content {
-    height: 43px;
-  }
-
-  .quiz__progress-label,
-  .quiz__progress-count {
-    top: 8px;
-    font-size: 10px;
-  }
-
-  .quiz__progress-label {
-    left: 25px;
-  }
-
-  .quiz__progress-count {
-    right: 25px;
-  }
-
-  .quiz__progress-track {
-    right: 17px;
-    bottom: 11px;
-    left: 25px;
-    height: 5px;
-  }
-
-  /* Mobile：上一题按钮维持卡片左下方 */
-  .quiz__previous {
-    top: auto;
-    right: auto;
-    bottom: 15px;
-    left: 10px;
-  }
 }
-/* =========================
-   测试页修正
-      进度条 / 猫咪提示框 / 上一题按钮
-      ========================= */
-
-      /* PC：猫咪图文分离 */
-      .quiz__cat {
-        display: flex;
-          align-items: center;
-            justify-content: flex-start;
-            }
-
-            .quiz__cat::before {
-              display: block;
-              }
-
-              .quiz__cat img {
-                position: relative;
-                  z-index: 1;
-                    width: 44.5%;
-                      height: 100%;
-                        object-fit: contain;
-                        }
-
-                        .quiz__cat-label {
-                          position: absolute;
-                            z-index: 2;
-                              top: 42.5%;
-                                right: 0;
-                                  left: auto;
-                                    display: flex;
-                                      align-items: center;
-                                        justify-content: center;
-                                          width: 54.2%;
-                                            height: 30.7%;
-                                              box-sizing: border-box;
-                                                margin: 0;
-                                                  padding: 0 8px;
-                                                    font-size: clamp(13px, 1.39vw, 20px);
-                                                      font-weight: 700;
-                                                        line-height: 1.2;
-                                                          text-align: center;
-                                                            white-space: nowrap;
-                                                              pointer-events: none;
-                                                              }
-
-                                                              /* PC：进度条背景 */
-                                                              .quiz__progress {
-                                                                isolation: isolate;
-                                                                  height: 72px;
-                                                                    min-height: 0;
-                                                                    }
-
-                                                                    .quiz__progress-bg {
-                                                                      display: block;
-                                                                        position: absolute;
-                                                                          z-index: -1;
-                                                                            inset: 0;
-                                                                              border: 1px solid rgba(222, 197, 151, 0.7);
-                                                                                border-radius: 12px;
-                                                                                  background: linear-gradient(
-                                                                                      180deg,
-                                                                                          rgba(54, 43, 30, 0.82),
-                                                                                              rgba(38, 31, 23, 0.76)
-                                                                                                );
-                                                                                                  box-shadow: 0 3px 12px rgba(35, 25, 14, 0.16);
-                                                                                                  }
-
-                                                                                                  .quiz__progress-content {
-                                                                                                    position: absolute;
-                                                                                                      inset: 0;
-                                                                                                        width: 100%;
-                                                                                                          height: 100%;
-                                                                                                          }
-
-                                                                                                          /* PC：上一题按钮回到题目卡片内部 */
-                                                                                                          .quiz__previous {
-                                                                                                            top: 8%;
-                                                                                                              right: 7%;
-                                                                                                                z-index: 5;
-                                                                                                                }
-
-                                                                                                                /* =========================
-                                                                                                                   Mobile 测试页
-                                                                                                                   ========================= */
-
-                                                                                                                   @media (max-width: 600px) {
-
-                                                                                                                     /* 保留原有猫咪位置 */
-                                                                                                                       .quiz__cat {
-                                                                                                                           top: 80px;
-                                                                                                                               right: 21px;
-                                                                                                                                   left: auto;
-                                                                                                                                       width: 178px;
-                                                                                                                                           height: 69.7px;
-                                                                                                                                             }
-
-                                                                                                                                               /* 猫咪文字半透明底框 */
-                                                                                                                                                 .quiz__cat::before {
-                                                                                                                                                     display: block;
-                                                                                                                                                         top: 51.65%;
-                                                                                                                                                             right: 2.25%;
-                                                                                                                                                                 bottom: 32.56%;
-                                                                                                                                                                     left: 45.51%;
-                                                                                                                                                                         width: auto;
-                                                                                                                                                                             height: auto;
-                                                                                                                                                                                 border-radius: 5px;
-                                                                                                                                                                                     background: rgba(197, 214, 255, 0.2);
-                                                                                                                                                                                       }
-
-                                                                                                                                                                                         .quiz__cat img {
-                                                                                                                                                                                             position: absolute;
-                                                                                                                                                                                                 z-index: 1;
-                                                                                                                                                                                                     top: 11.48%;
-                                                                                                                                                                                                         left: -2.81%;
-                                                                                                                                                                                                             width: 42.7%;
-                                                                                                                                                                                                                 height: 94.7%;
-                                                                                                                                                                                                                     max-width: none;
-                                                                                                                                                                                                                         object-fit: contain;
-                                                                                                                                                                                                                           }
-
-                                                                                                                                                                                                                             .quiz__cat-label {
-                                                                                                                                                                                                                                 z-index: 2;
-                                                                                                                                                                                                                                     top: 51.65%;
-                                                                                                                                                                                                                                         right: 2.25%;
-                                                                                                                                                                                                                                             bottom: 32.56%;
-                                                                                                                                                                                                                                                 left: 45.51%;
-                                                                                                                                                                                                                                                     width: auto;
-                                                                                                                                                                                                                                                         height: auto;
-                                                                                                                                                                                                                                                             padding: 0;
-                                                                                                                                                                                                                                                                 font-size: 10px;
-                                                                                                                                                                                                                                                                     line-height: 12px;
-                                                                                                                                                                                                                                                                         font-weight: 700;
-                                                                                                                                                                                                                                                                             white-space: nowrap;
-                                                                                                                                                                                                                                                                                 text-align: center;
-                                                                                                                                                                                                                                                                                     transform: none;
-                                                                                                                                                                                                                                                                                       }
-
-                                                                                                                                                                                                                                                                                         /* Mobile：进度条背景 */
-                                                                                                                                                                                                                                                                                           .quiz__progress {
-                                                                                                                                                                                                                                                                                               top: 136px;
-                                                                                                                                                                                                                                                                                                   left: 0;
-                                                                                                                                                                                                                                                                                                       width: 100%;
-                                                                                                                                                                                                                                                                                                           height: 43px;
-                                                                                                                                                                                                                                                                                                               min-height: 0;
-                                                                                                                                                                                                                                                                                                                   transform: none;
-                                                                                                                                                                                                                                                                                                                     }
-
-                                                                                                                                                                                                                                                                                                                       .quiz__progress-bg {
-                                                                                                                                                                                                                                                                                                                           display: block;
-                                                                                                                                                                                                                                                                                                                               border-right: 0;
-                                                                                                                                                                                                                                                                                                                                   border-left: 0;
-                                                                                                                                                                                                                                                                                                                                       border-radius: 0;
-                                                                                                                                                                                                                                                                                                                                           background: linear-gradient(
-                                                                                                                                                                                                                                                                                                                                                 180deg,
-                                                                                                                                                                                                                                                                                                                                                       rgba(54, 43, 30, 0.82),
-                                                                                                                                                                                                                                                                                                                                                             rgba(38, 31, 23, 0.76)
-                                                                                                                                                                                                                                                                                                                                                                 );
-                                                                                                                                                                                                                                                                                                                                                                   }
-
-                                                                                                                                                                                                                                                                                                                                                                     .quiz__progress-content {
-                                                                                                                                                                                                                                                                                                                                                                         height: 43px;
-                                                                                                                                                                                                                                                                                                                                                                           }
-
-                                                                                                                                                                                                                                                                                                                                                                             .quiz__progress-label,
-                                                                                                                                                                                                                                                                                                                                                                               .quiz__progress-count {
-                                                                                                                                                                                                                                                                                                                                                                                   top: 8px;
-                                                                                                                                                                                                                                                                                                                                                                                       font-size: 10px;
-                                                                                                                                                                                                                                                                                                                                                                                         }
-
-                                                                                                                                                                                                                                                                                                                                                                                           .quiz__progress-label {
-                                                                                                                                                                                                                                                                                                                                                                                               left: 25px;
-                                                                                                                                                                                                                                                                                                                                                                                                 }
-
-                                                                                                                                                                                                                                                                                                                                                                                                   .quiz__progress-count {
-                                                                                                                                                                                                                                                                                                                                                                                                       right: 25px;
-                                                                                                                                                                                                                                                                                                                                                                                                         }
-
-                                                                                                                                                                                                                                                                                                                                                                                                           .quiz__progress-track {
-                                                                                                                                                                                                                                                                                                                                                                                                               right: 17px;
-                                                                                                                                                                                                                                                                                                                                                                                                                   bottom: 11px;
-                                                                                                                                                                                                                                                                                                                                                                                                                       left: 25px;
-                                                                                                                                                                                                                                                                                                                                                                                                                           height: 5px;
-                                                                                                                                                                                                                                                                                                                                                                                                                             }
-
-                                                                                                                                                                                                                                                                                                                                                                                                                               /* Mobile：上一题按钮维持卡片左下方 */
-                                                                                                                                                                                                                                                                                                                                                                                                                                 .quiz__previous {
-                                                                                                                                                                                                                                                                                                                                                                                                                                     top: auto;
-                                                                                                                                                                                                                                                                                                                                                                                                                                         right: auto;
-                                                                                                                                                                                                                                                                                                                                                                                                                                             bottom: 15px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                 left: 10px;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                   }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                   }
