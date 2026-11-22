@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useState } from "react";
 import { groups, questions } from "../data/question";
 import "./QuizPage.css";
@@ -18,8 +19,14 @@ type QuizPageProps = {
 };
 
 const groupTextColors = [
-  "#572F00", "#3d2c1b", "#2c2011", "#2c2011",
-  "#e5c07b", "#e5c07b", "#2c2011", "#2c2011",
+  "#572F00",
+  "#3d2c1b",
+  "#2c2011",
+  "#2c2011",
+  "#e5c07b",
+  "#e5c07b",
+  "#2c2011",
+  "#2c2011",
 ];
 
 export default function QuizPage({ onComplete }: QuizPageProps) {
@@ -28,10 +35,10 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
   const [showSubmit, setShowSubmit] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  // 读取本地进度
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
+
       if (saved) {
         const data: SavedProgress = JSON.parse(saved);
 
@@ -41,6 +48,7 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
               ? Math.min(Math.max(data.current, 0), questions.length - 1)
               : 0
           );
+
           setAnswers(
             data.answers && typeof data.answers === "object"
               ? data.answers
@@ -50,13 +58,15 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
       }
     } catch (error) {
       console.error("读取答题进度失败：", error);
-      localStorage.removeItem(STORAGE_KEY);
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {}
     } finally {
       setLoaded(true);
     }
   }, []);
 
-  // 自动保存进度
   useEffect(() => {
     if (!loaded) return;
 
@@ -70,7 +80,6 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
     }
   }, [current, answers, loaded]);
 
-  // 计算各组得分
   const scores = useMemo(
     () =>
       groups
@@ -87,23 +96,27 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
     [answers]
   );
 
-  // 计算最终体质
+  // 主体质与伴生体质判定
   const resultType = useMemo(() => {
     const [first, second] = scores;
 
-    if (!first || !second || first.score < 8) {
-      return { main: "peaceful", secondary: "" };
+    if (!first || first.score < 8) {
+      return {
+        main: "peaceful",
+        secondary: "",
+      };
     }
 
-    if (second.score >= 8 && first.score - second.score <= 3) {
+    // 最高分达到8分，且与第二名分差不超过1分
+    if (second && first.score - second.score <= 1) {
       return {
-        main: first.id,
-        secondary: second.id,
+        main: first.constitution,
+        secondary: second.constitution,
       };
     }
 
     return {
-      main: first.id,
+      main: first.constitution,
       secondary: "",
     };
   }, [scores]);
@@ -119,7 +132,6 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
   const selected = answers[question.id];
   const progress = ((current + 1) / questions.length) * 100;
 
-  // 选择答案后自动进入下一题
   function chooseAnswer(value: number) {
     setAnswers((previous) => ({
       ...previous,
@@ -133,14 +145,12 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
     }
   }
 
-  // 返回上一题
   function goPrevious() {
     if (current > 0) {
       setCurrent((previous) => previous - 1);
     }
   }
 
-  // 确认提交
   function confirmSubmit() {
     setShowSubmit(false);
 
@@ -154,13 +164,16 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
   }
 
   return (
-    <main className="quiz">
-      {/* 猫咪图标与文案 */}
+    <main className={`quiz quiz--group-${groupIndex + 1}`}>
+      {/* 当前组猫咪 */}
       <div className="quiz__cat">
         <img
-          src={`${A}/icons/asset_deco_test_cat_${String(groupIndex + 1).padStart(2, "0")}.png`}
+          src={`${A}/icons/asset_deco_test_cat_${String(
+            groupIndex + 1
+          ).padStart(2, "0")}.png`}
           alt=""
         />
+
         <span
           className="quiz__cat-label"
           style={{ color: groupTextColors[groupIndex] || "#2c2011" }}
@@ -172,32 +185,34 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
       {/* 答题进度 */}
       <section className="quiz__progress">
         <div className="quiz__progress-bg" aria-hidden="true" />
-        <div className="quiz__progress-bg-mobile" aria-hidden="true" />
 
-        <span className="quiz__progress-title">把脉进度</span>
+        <div className="quiz__progress-content">
+          <span className="quiz__progress-label">把脉进度</span>
 
-        <div className="quiz__progress-track">
-          <div
-            className="quiz__progress-fill"
-            style={{ width: `${progress}%` }}
-          />
+          <div className="quiz__progress-track">
+            <div
+              className="quiz__progress-fill"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+          <span className="quiz__progress-count">
+            {String(current + 1).padStart(2, "0")} /{" "}
+            {String(questions.length).padStart(2, "0")}
+          </span>
         </div>
-
-        <span className="quiz__progress-count">
-          {String(current + 1).padStart(2, "0")} /{" "}
-          {String(questions.length).padStart(2, "0")}
-        </span>
       </section>
 
       {/* 题目卡片 */}
-      <section className="quiz__card">
-        <span className="quiz__number">
-          {String(current + 1).padStart(2, "0")}
-        </span>
+      <section className="quiz__question-card">
+        <div className="quiz__question-heading">
+          <span className="quiz__number">
+            {String(current + 1).padStart(2, "0")}
+          </span>
 
-        <h2 className="quiz__question">{question.title}</h2>
+          <h1>{question.title}</h1>
+        </div>
 
-        {/* 答案选项 */}
         <div className="quiz__options">
           {question.options.map((option, index) => {
             const value = index + 1;
@@ -214,6 +229,7 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
                 <span className="quiz__option-letter">
                   {LETTERS[index]}
                 </span>
+
                 <span className="quiz__option-text">{option}</span>
               </button>
             );
@@ -234,21 +250,40 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
 
       {/* 第32题提交确认弹窗 */}
       {showSubmit && (
-        <div className="quiz__submit-overlay">
-          {/* PC 弹窗 */}
-          <div className="quiz__submit quiz__submit--pc">
-            <p>如果确定答案无误</p>
-            <button type="button" onClick={confirmSubmit}>
-              确认提交
-            </button>
-          </div>
+        <div className="quiz-modal">
+          <div className="quiz-modal__panel">
+            {/* PC 弹窗 */}
+            <div className="quiz-modal__desktop">
+              <img
+                className="quiz-modal__image"
+                src={`${A}/illustrations/asset_illustrated_popup_test_submit_pc.png`}
+                alt=""
+              />
 
-          {/* Mobile 弹窗 */}
-          <div className="quiz__submit quiz__submit--mobile">
-            <p>如果确定答案无误</p>
-            <button type="button" onClick={confirmSubmit}>
-              确认提交
-            </button>
+              <button
+                type="button"
+                className="quiz-modal__pc-confirm"
+                onClick={confirmSubmit}
+              >
+                确认提交
+              </button>
+            </div>
+
+            {/* Mobile 弹窗 */}
+            <div className="quiz-modal__mobile">
+              <img
+                className="quiz-modal__image"
+                src={`${A}/illustrations/asset_illustrated_popup_test_submit_mobile.png`}
+                alt=""
+              />
+
+              <button
+                type="button"
+                className="quiz-modal__mobile-confirm"
+                onClick={confirmSubmit}
+                aria-label="确认提交"
+              />
+            </div>
           </div>
         </div>
       )}
