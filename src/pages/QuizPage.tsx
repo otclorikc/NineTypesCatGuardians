@@ -58,7 +58,6 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
       }
     } catch (error) {
       console.error("读取答题进度失败：", error);
-
       try {
         localStorage.removeItem(STORAGE_KEY);
       } catch {}
@@ -96,7 +95,6 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
     [answers]
   );
 
-  // 主体质与伴生体质判定
   const resultType = useMemo(() => {
     const [first, second] = scores;
 
@@ -107,7 +105,6 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
       };
     }
 
-    // 最高分达到8分，且与第二名分差不超过1分
     if (second && first.score - second.score <= 1) {
       return {
         main: first.constitution,
@@ -165,23 +162,26 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
 
   return (
     <main className={`quiz quiz--group-${groupIndex + 1}`}>
-      {/* 当前组猫咪 */}
-      <div className="quiz__cat">
-        <img
-          src={`${A}/icons/asset_deco_test_cat_${String(
-            groupIndex + 1
-          ).padStart(2, "0")}.png`}
-          alt=""
-        />
+{/* 当前组猫咪 */}
+<div className="quiz__cat">
+  <img
+    src={`${A}/icons/asset_deco_test_cat_${String(
+      groupIndex + 1
+    ).padStart(2, "0")}.png`}
+    alt=""
+  />
 
-        <span
-          className="quiz__cat-label"
-          style={{ color: groupTextColors[groupIndex] || "#2c2011" }}
-        >
-          {group.catText}
-        </span>
-      </div>
+  {/* 独立玻璃背景框 */}
+  <div className="quiz__cat-label-bg" aria-hidden="true" />
 
+  {/* 独立文字 */}
+  <span
+    className="quiz__cat-label"
+    style={{ color: groupTextColors[groupIndex] || "#2c2011" }}
+  >
+    {group.catText}
+  </span>
+</div>
       {/* 答题进度 */}
       <section className="quiz__progress">
         <div className="quiz__progress-bg" aria-hidden="true" />
@@ -189,17 +189,21 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
         <div className="quiz__progress-content">
           <span className="quiz__progress-label">把脉进度</span>
 
+          <span className="quiz__progress-count">
+            {String(current + 1).padStart(2, "0")} /{" "}
+            {String(questions.length).padStart(2, "0")}
+          </span>
+
+          <span className="quiz__progress-percent">
+            {Math.round(progress)}%
+          </span>
+
           <div className="quiz__progress-track">
             <div
               className="quiz__progress-fill"
               style={{ width: `${progress}%` }}
             />
           </div>
-
-          <span className="quiz__progress-count">
-            {String(current + 1).padStart(2, "0")} /{" "}
-            {String(questions.length).padStart(2, "0")}
-          </span>
         </div>
       </section>
 
@@ -207,12 +211,21 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
       <section className="quiz__question-card">
         <div className="quiz__question-heading">
           <span className="quiz__number">
-            {String(current + 1).padStart(2, "0")}
+            #{String(current + 1).padStart(2, "0")}
           </span>
 
           <h1>{question.title}</h1>
         </div>
-
+{/* 上一题 */}
+{current > 0 && (
+  <button
+    type="button"
+    className="quiz__previous"
+    onClick={goPrevious}
+  >
+    ＜ 上一题
+  </button>
+)}
         <div className="quiz__options">
           {question.options.map((option, index) => {
             const value = index + 1;
@@ -237,56 +250,80 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
         </div>
       </section>
 
-      {/* 上一题 */}
-      {current > 0 && (
+{/* 第32题提交确认弹窗 */}
+{showSubmit && (
+  <div className="quiz-modal">
+    <div className="quiz-modal__panel">
+
+      {/* PC 弹窗 */}
+      <div className="quiz-modal__desktop">
+        <img
+          className="quiz-modal__image"
+          src={`${A}/illustrations/asset_illustrated_popup_test_submit_pc.png`}
+          alt=""
+        />
+
+        <h2 className="quiz-modal__pc-title">
+  如果确定答案无误
+</h2>
+<h2 className="quiz-modal__pc-subtitle">
+  檐主就准备开方子啦
+</h2>
+
         <button
           type="button"
-          className="quiz__previous"
-          onClick={goPrevious}
+          className="quiz-modal__pc-confirm"
+          onClick={confirmSubmit}
         >
-          ＜ 上一题
+          别吊胃口了
         </button>
-      )}
 
-      {/* 第32题提交确认弹窗 */}
-      {showSubmit && (
-        <div className="quiz-modal">
-          <div className="quiz-modal__panel">
-            {/* PC 弹窗 */}
-            <div className="quiz-modal__desktop">
-              <img
-                className="quiz-modal__image"
-                src={`${A}/illustrations/asset_illustrated_popup_test_submit_pc.png`}
-                alt=""
-              />
+        <button
+          type="button"
+          className="quiz-modal__close"
+          onClick={() => setShowSubmit(false)}
+          aria-label="关闭并返回修改"
+        >
+          ×
+        </button>
+      </div>
 
-              <button
-                type="button"
-                className="quiz-modal__pc-confirm"
-                onClick={confirmSubmit}
-              >
-                确认提交
-              </button>
-            </div>
+      {/* Mobile 弹窗 */}
+      <div className="quiz-modal__mobile">
+        <img
+          className="quiz-modal__image"
+          src={`${A}/illustrations/asset_illustrated_popup_test_submit_mobile.png`}
+          alt=""
+        />
 
-            {/* Mobile 弹窗 */}
-            <div className="quiz-modal__mobile">
-              <img
-                className="quiz-modal__image"
-                src={`${A}/illustrations/asset_illustrated_popup_test_submit_mobile.png`}
-                alt=""
-              />
+        <h2 className="quiz-modal__mobile-title">
+  如果确定答案无误
+</h2>
+<h2 className="quiz-modal__mobile-subtitle">
+  檐主就准备开方子啦
+</h2>
 
-              <button
-                type="button"
-                className="quiz-modal__mobile-confirm"
-                onClick={confirmSubmit}
-                aria-label="确认提交"
-              />
-            </div>
-          </div>
-        </div>
-      )}
+        <button
+          type="button"
+          className="quiz-modal__mobile-confirm"
+          onClick={confirmSubmit}
+        >
+          ✦ 别吊胃口了 ✦
+        </button>
+
+        <button
+          type="button"
+          className="quiz-modal__close"
+          onClick={() => setShowSubmit(false)}
+          aria-label="关闭并返回修改"
+        >
+          ×
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
     </main>
   );
 }

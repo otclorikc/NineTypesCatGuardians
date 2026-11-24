@@ -1,178 +1,907 @@
-/* ResultPage：PC / Mobile 结果页 */
-.result { width: 100%; min-height: 100vh; color: #382718; }
-.result__desktop {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+/* =====================================================
+   ResultPage
+   PC：固定比例居中布局
+   Mobile：纵向自然流式布局
+===================================================== */
+
+.result {
   width: 100%;
   min-height: 100vh;
-  padding: 30px;
+  color: #382718;
+  font-family: "Noto Sans SC", sans-serif;
+}
+
+/* =====================================================
+   PC
+===================================================== */
+
+.result__desktop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 0;
   box-sizing: border-box;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+
+/* PC 外框：固定 1260 × 800 比例 */
 .result__desktop-frame {
   position: relative;
-  width: min(1260px, 100%);
-  min-height: 800px;
-  padding: 30px 46px;
+  width: 1260px;
+  height: 800px;
+  flex: none;
   box-sizing: border-box;
-  border: 3px solid #c5a059;
-  background: rgba(250, 246, 238, .34);
+  padding: 38px 58px 35px;
+  border: 1px solid #C5A059;
+  border-radius: 32px;
+  background: rgba(250, 246, 238, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
-.result__header { padding-top: 2px; text-align: center; color: #553b20; font-size: 27px; letter-spacing: 5px; }
+
+/* PC 标题 */
+.result__header {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  color: #553B20;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* PC 主内容区域 */
 .result__desktop-content {
   display: grid;
-  grid-template-columns: minmax(0, 38fr) minmax(0, 62fr);
-  gap: 25px;
-  margin-top: 30px;
+  grid-template-columns: 341px minmax(0, 1fr);
+  gap: 42px;
+  height: 462px;
+  margin-top: 20px;
 }
-.result__portrait { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 0; }
-.result__character { display: block; width: min(100%, 390px); max-height: 440px; object-fit: contain; }
-.result__guardian { display: flex; flex-direction: column; align-items: center; gap: 5px; margin-top: 8px; }
-.result__guardian span, .result__type span { font-size: 17px; }
-.result__guardian strong { font-size: 30px; }
-.result__badge { width: 180px; max-height: 100px; margin-top: 12px; object-fit: contain; }
-.result__badge-text { margin: 4px 0; font-size: 14px; }
-.result__details { min-width: 0; }
-.result__type { margin-bottom: 16px; text-align: center; }
-.result__type h1 { margin: 5px 0; font-size: 36px; }
 
-/* 文字内容模块统一使用半透明矢量框，不再依赖 tag / whisper 背景图片 */
-.result__traits,
-.result__whisper,
-.result__tags {
+/* =====================================================
+   PC 左侧角色框
+===================================================== */
+
+.result__portrait {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 462px;
   box-sizing: border-box;
-  border: 1px solid rgba(181, 145, 83, .58);
-  border-radius: 16px;
-  background: rgba(253, 246, 232, .72);
+  padding-top: 12px;
+  overflow: hidden;
+  border: 2px solid #C5A059;
+  border-radius: 25px;
+  background: rgba(245, 239, 227, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
-.result__traits { padding: 20px 24px; font-size: 16px; line-height: 1.75; }
-.result__traits p { margin: 0 0 12px; }
-.result__traits p:last-child { margin-bottom: 0; }
-.result__whisper { margin-top: 15px; padding: 16px 20px; }
-.result__whisper h2 { margin: 0 0 8px; font-size: 19px; }
-.result__whisper p { margin: 0; font-size: 15px; line-height: 1.6; }
-.result__tags { position: relative; margin-top: 15px; min-height: 92px; padding: 14px 18px; }
-.result__tag-list { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 10px 14px; }
-.result__tag-list span { font-size: 14px; }
 
-/* PC 伴生按钮：与 Mobile 使用同一视觉样式 */
-.result__secondary-control--pc {
-  position: absolute;
-  z-index: 8;
-  top: 44px;
-  left: 50%;
-  width: 278px;
-  height: 40px;
-  transform: translateX(-50%);
+.result__portrait-title {
+  position: relative;
+  z-index: 2;
+  color: #8C6D37;
+  font-size: 15px;
+  font-weight: 700;
 }
-.result__secondary-control--pc button {
+
+.result__character {
+  position: absolute;
+  z-index: 1;
+  top: 62px;
+  left: 50%;
+  width: 88%;
+  height: 330px;
+  transform: translateX(-50%);
+  object-fit: contain;
+}
+
+.result__guardian-name {
+  position: absolute;
+  z-index: 2;
+  bottom: 12px;
+  color: #2A1E11;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* =====================================================
+   PC 右侧内容
+===================================================== */
+
+.result__details {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 462px;
+}
+
+.result__type {
+  height: 80px;
+  flex: none;
+  padding-top: 2px;
+}
+
+.result__type span {
+  color: #8C6D37;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.result__type h1 {
+  margin: 3px 0 0;
+  color: #2A1E11;
+  font-size: 34px;
+  line-height: 1.3;
+}
+
+/* PC 核心特质 */
+.result__traits {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 239px;
+  flex: none;
+  box-sizing: border-box;
+  padding: 16px 24px 12px;
+  overflow: hidden;
+  border: 1px solid #D4C3A3;
+  border-radius: 25px;
+  background: rgba(250, 246, 238, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.result__traits h2 {
+  flex: none;
+  margin: 0 0 10px;
+  color: #8C6D37;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.result__traits-scroll {
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 12px;
+  color: #3D2C1B;
+  font-size: 15px;
+  line-height: 1.8;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.6) transparent;
+}
+
+.result__traits-scroll p {
+  margin: 0 0 10px;
+}
+
+.result__traits-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.result__traits-scroll::-webkit-scrollbar-track {
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 4px;
+}
+
+.result__traits-scroll::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: rgba(255,255,255,.6);
+}
+
+/* =====================================================
+   PC Tag + Whisper 横向模块
+===================================================== */
+
+.result__support {
+  display: grid;
+  grid-template-columns: 39% minmax(0, 1fr);
+  gap: 10px;
+  height: 112px;
+  flex: none;
+  margin-top: 16px;
+}
+
+/* Tag 外层 */
+.result__tags {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 278px;
-  height: 40px;
-  padding: 0;
-  border: 0;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid rgba(212,195,163,.7);
   border-radius: 16px;
-  background: rgba(217, 217, 217, .2);
-  color: #6b5949;
-  font-family: "Noto Sans SC", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 22px;
-  cursor: pointer;
+  background: rgba(250,246,238,.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-/* PC Navigation：default 矢量按钮，不加载含多状态的导航 SVG */
-.result__desktop-actions { display: flex; justify-content: center; align-items: center; gap: 18px; margin-top: 18px; }
-.result__desktop-actions button {
-  min-width: 190px;
-  min-height: 44px;
-  padding: 8px 18px;
-  border: 1px solid rgba(173, 133, 65, .78);
-  border-radius: 24px;
-  background: rgba(253, 246, 232, .72);
+.result__tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.result__tag-list span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 27px;
+  padding: 4px 9px;
+  box-sizing: border-box;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 10px;
+  background: rgba(255,255,255,.31);
   color: #624721;
+  font-size: 11px;
+  line-height: 1.4;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* 悄悄话 */
+.result__whisper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border: 1px solid rgba(212,195,163,.7);
+  border-radius: 16px;
+  background: rgba(250,246,238,.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.result__whisper h2 {
+  margin: 0 0 6px;
+  color: #8C6D37;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.result__whisper p {
+  margin: 0;
+  color: #3D2C1B;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* =====================================================
+   PC 徽章：覆盖在内容框右上方
+===================================================== */
+
+.result__badge {
+  position: absolute;
+  z-index: 10;
+  top: -15px;
+  right: 2px;
+  width: 200px;
+  height: 194px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result__badge img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.result__badge-text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  margin-top: 2px;
+  text-align: center;
+  color: #845C2F;
+}
+
+.result__badge-text span {
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.result__badge-text strong {
+  font-size: 17px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+/* =====================================================
+   PC 伴生按钮
+===================================================== */
+
+.result__secondary-control--pc {
+  position: absolute;
+  z-index: 12;
+  top: 10px;
+  right: 220px;
+}
+
+.result__secondary-control--pc button {
+  min-height: 30px;
+  padding: 5px 14px;
+  border: 1px solid rgba(197,160,89,.5);
+  border-radius: 16px;
+  background: rgba(250,246,238,.55);
+  color: #6B5949;
   font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+/* =====================================================
+   PC 导航
+===================================================== */
+
+.result__desktop-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 38px;
+  margin: 28px 105px 0;
+}
+
+.result-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 44px;
+  padding: 7px 12px;
+  border: 1.5px solid #F7D284;
+  border-radius: 22px;
+  outline: 1px solid rgba(255,240,176,.8);
+  outline-offset: -4px;
+  color: #FFFDF8;
+  font-family: "Noto Sans SC", sans-serif;
   font-size: 15px;
   font-weight: 700;
+  line-height: 1.4;
+  white-space: nowrap;
   cursor: pointer;
 }
-.result__desktop-actions button:hover { background: rgba(232, 211, 171, .82); }
-.result__diagnostic { max-width: 1000px; margin: 16px auto 0; text-align: center; font-size: 12px; line-height: 1.6; }
 
-/* Mobile 默认隐藏 PC */
-.result__mobile { display: none; }
-
-/* 分享弹窗 */
-.result-share { position: fixed; z-index: 1000; inset: 0; display: flex; justify-content: center; align-items: center; padding: 16px; overflow-y: auto; background: rgba(20, 17, 14, .88); }
-.result-share__panel { position: relative; display: flex; flex-direction: column; align-items: center; gap: 18px; width: min(420px, 100%); max-height: 90vh; overflow-y: auto; padding: 28px 24px; box-sizing: border-box; border: 2px solid #c5a059; border-radius: 24px; background: #14110e; color: #f8ecd5; }
-.result-share__close { position: absolute; top: 10px; right: 16px; border: 0; background: transparent; color: #f8ecd5; font-size: 30px; cursor: pointer; }
-.result-share__panel h2 { margin: 8px 20px; text-align: center; font-size: 19px; }
-.result-share__poster { display: block; width: min(300px, 100%); height: auto; max-height: 58vh; object-fit: contain; border-radius: 12px; }
-.result-share__download { display: inline-block; padding: 10px 24px; border: 1px solid #c5a059; border-radius: 24px; color: #f8ecd5; text-decoration: none; }
-.result-share__footer { margin: 0; text-align: center; font-size: 11px; line-height: 1.5; }
-
-@media (max-width: 767px) {
-  .result__desktop { display: none; }
-  .result__mobile {
-    position: relative;
-    display: block;
-    width: 100%;
-    min-height: 100vh;
-    padding-bottom: 24px;
-    box-sizing: border-box;
-    background-position: top center;
-    background-repeat: repeat-y;
-    background-size: 100% auto;
-  }
-  .result__mobile-header { display: flex; align-items: center; justify-content: center; height: 52px; background: rgba(44, 23, 8, .14); color: #553b20; font-size: 16px; letter-spacing: 2px; }
-  .result__mobile-profile { position: relative; min-height: 374px; margin: 44px 4px 0; }
-  .result__mobile-portrait { position: absolute; top: 0; left: 0; display: flex; flex-direction: column; align-items: center; width: 100%; }
-  .result__mobile-character { display: block; width: 190px; height: 220px; object-fit: contain; }
-  .result__mobile-guardian { display: flex; flex-direction: column; align-items: center; gap: 3px; margin-top: -2px; }
-  .result__mobile-guardian span { font-size: 13px; }
-  .result__mobile-guardian strong { font-size: 25px; }
-  .result__mobile-badge { width: 145px; height: 55px; margin-top: 2px; object-fit: contain; }
-  .result__mobile-portrait > p { margin: 0; font-size: 11px; }
-  .result__mobile-type { position: absolute; z-index: 1; top: 10px; left: 12px; display: flex; flex-direction: column; gap: 5px; }
-  .result__mobile-type span { font-size: 13px; }
-  .result__mobile-type h1 { margin: 0; font-size: 27px; }
-  .result__mobile-traits,
-  .result__mobile-tags,
-  .result__mobile-whisper { margin: 14px 16px; border: 1px solid rgba(181, 145, 83, .58); border-radius: 16px; background: rgba(253, 246, 232, .72); box-sizing: border-box; }
-  .result__mobile-traits { min-height: 298px; margin-top: 0; padding: 18px 17px; font-size: 14px; line-height: 1.7; }
-  .result__mobile-traits p { margin: 0 0 12px; }
-  .result__mobile-traits p:last-child { margin-bottom: 0; }
-  .result__mobile-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px 13px; min-height: 109px; padding: 18px 12px; }
-  .result__mobile-tags span { font-size: 13px; }
-  .result__mobile-whisper { padding: 15px 17px; }
-  .result__mobile-whisper h2 { margin: 0 0 8px; font-size: 16px; }
-  .result__mobile-whisper p { margin: 0; font-size: 13px; line-height: 1.65; }
-
-  /* Figma：移动端伴生按钮区域 318 × 200，内部按钮 278 × 40 */
-  .result__mobile-secondary-control { position: absolute; z-index: 12; top: 446px; left: 50%; width: 318px; height: 200px; transform: translateX(-50%); pointer-events: none; }
-  .result__mobile-secondary-button { position: absolute; left: 20px; display: flex; align-items: center; justify-content: center; width: 278px; height: 40px; padding: 0; border: 0; border-radius: 16px; background: transparent; color: #6b5949; font-family: "Noto Sans SC", sans-serif; font-size: 16px; font-weight: 700; line-height: 22px; cursor: pointer; pointer-events: auto; }
-  .result__mobile-secondary-button--first { top: 20px; }
-  .result__mobile-secondary-button--first::before { position: absolute; z-index: -1; width: 262px; height: 40px; border-radius: 16px; background: rgba(217, 217, 217, .2); content: ""; }
-  .result__mobile-secondary-button--primary { top: 80px; }
-  .result__mobile-secondary-button--primary::before { position: absolute; z-index: -1; width: 122px; height: 40px; border-radius: 16px; background: rgba(217, 217, 217, .2); content: ""; }
-  .result__mobile-secondary-button--secondary { top: 140px; }
-  .result__mobile-secondary-button--secondary::before { position: absolute; z-index: -1; width: 137px; height: 40px; border-radius: 16px; background: rgba(217, 217, 217, .2); content: ""; }
-
-  .result__mobile-actions { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 22px 12px 14px; }
-  .result__mobile-actions button { flex: 1; min-width: 0; padding: 0; border: 0; background: transparent; cursor: pointer; }
-  .result__mobile-actions img { display: block; width: 100%; height: auto; }
-  .result__mobile-diagnostic { margin: 14px 16px; padding: 12px; border-radius: 12px; background: rgba(253, 246, 232, .72); font-size: 11px; line-height: 1.6; }
-  .result__footer { margin: 18px 12px 0; text-align: center; font-size: 10px; line-height: 1.5; }
+.result-button--again {
+  background: #C5A059;
 }
 
-@media (min-width: 768px) and (max-width: 1100px) {
-  .result__desktop-frame { padding: 24px; }
-  .result__desktop-content { grid-template-columns: minmax(0, 34fr) minmax(0, 66fr); gap: 14px; }
-  .result__traits { padding: 14px; font-size: 14px; }
-  .result__desktop-actions button { min-width: 150px; }
+.result-button--share {
+  background: #E29724;
+}
+
+.result-button--home {
+  background: #54402A;
+}
+
+/* PC 诊断手册 */
+.result__diagnostic {
+  margin: 30px 0 0;
+  color: rgba(140,109,55,.79);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* =====================================================
+   Mobile
+===================================================== */
+
+.result__mobile {
+  display: none;
+}
+
+/* =====================================================
+   分享弹窗
+===================================================== */
+
+.result-share {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  overflow-y: auto;
+  background: rgba(20,17,14,.88);
+}
+
+.result-share__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: min(420px,100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px 24px;
+  box-sizing: border-box;
+  border: 2px solid #C5A059;
+  border-radius: 24px;
+  background: #14110E;
+  color: #F8ECD5;
+}
+
+.result-share__close {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  border: 0;
+  background: transparent;
+  color: #F8ECD5;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.result-share__panel h2 {
+  margin: 8px 20px;
+  text-align: center;
+  font-size: 19px;
+}
+
+.result-share__poster {
+  display: block;
+  width: min(300px,100%);
+  height: auto;
+  max-height: 58vh;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.result-share__download {
+  display: inline-block;
+  padding: 10px 24px;
+  border: 1px solid #C5A059;
+  border-radius: 24px;
+  color: #F8ECD5;
+  text-decoration: none;
+}
+
+.result-share__footer {
+  margin: 0;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   Mobile：纵向排版
+===================================================== */
+
+@media (max-width: 767px) {
+
+  .result__desktop {
+    display: none;
+  }
+
+  .result__mobile {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  /* 背景白色 30% 覆盖层 */
+  .result__mobile::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: rgba(255,255,255,.3);
+    content: "";
+    pointer-events: none;
+  }
+
+  /* 顶部导航磨砂 + 白色 20% */
+  .result__mobile-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 100%;
+    height: 52px;
+    box-sizing: border-box;
+    background: rgba(255,255,255,.2);
+    border-bottom: 1px solid rgba(255,255,255,.45);
+    color: #5C4016;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* 伴生体质按钮放在标题下方，不再覆盖主体内容 */
+  .result__mobile-secondary-control {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    flex: none;
+    margin: 8px 0 0;
+  }
+
+  .result__mobile-secondary-control button {
+    min-height: 30px;
+    padding: 5px 14px;
+    border: 1px solid rgba(197,160,89,.5);
+    border-radius: 16px;
+    background: rgba(250,246,238,.55);
+    color: #6B5949;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  /* 角色区域 */
+  .result__mobile-profile {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 70px 390px;
+    align-items: start;
+    flex: none;
+    width: 100%;
+    margin: 8px auto 0;
+  }
+
+  .result__mobile-type {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 22px;
+    padding-top: 8px;
+  }
+
+  .result__mobile-type span,
+  .result__mobile-guardian span {
+    color: #765A39;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .result__mobile-type strong {
+    margin-top: 3px;
+    color: #2A1906;
+    font-size: 27px;
+    line-height: 1.3;
+  }
+
+  .result__mobile-guardian {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 22px;
+    padding-top: 8px;
+  }
+
+  .result__mobile-guardian strong {
+    margin-top: 3px;
+    color: #2A1906;
+    font-size: 27px;
+    line-height: 1.3;
+  }
+
+  /* 中间徽章分数框 */
+  .result__mobile-badge-score {
+    position: relative;
+    z-index: 4;
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    min-height: 47px;
+    margin-top: 4px;
+    padding: 4px 2px;
+    box-sizing: border-box;
+    border: 1px solid rgba(107,75,27,.2);
+    border-radius: 10px;
+    background: rgba(255,248,224,.31);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    text-align: center;
+  }
+
+  .result__mobile-badge-score span {
+    color: #9B744F;
+    font-size: 9px;
+    line-height: 14px;
+  }
+
+  .result__mobile-badge-score strong {
+    color: #DF5858;
+    font-size: 15px;
+    line-height: 17px;
+  }
+
+  /* 徽章圆环在后，角色图在前 */
+  .result__mobile-hero {
+    position: relative;
+    grid-column: 1 / 4;
+    grid-row: 2;
+    width: 100%;
+    height: 390px;
+  }
+
+  .result__mobile-badge-image {
+    position: absolute;
+    z-index: 1;
+    top: 5px;
+    left: 50%;
+    width: 350px;
+    height: 350px;
+    max-width: 100%;
+    transform: translateX(-50%);
+    object-fit: contain;
+  }
+
+  .result__mobile-character {
+    position: absolute;
+    z-index: 2;
+    top: 105px;
+    left: 50%;
+    width: 206px;
+    height: 220px;
+    transform: translateX(-50%);
+    object-fit: contain;
+  }
+
+  /* 核心特质 */
+  .result__mobile-traits {
+    position: relative;
+    z-index: 2;
+    flex: none;
+    margin: 0 16px 12px;
+    padding: 18px 17px;
+    box-sizing: border-box;
+    border: 1px solid #D4B878;
+    border-radius: 22px;
+    background: rgba(250,246,238,.76);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .result__mobile-traits h2 {
+    margin: 0 0 12px;
+    color: #8C5B17;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .result__mobile-traits-content {
+    color: #49301D;
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  .result__mobile-traits-content p {
+    margin: 0 0 14px;
+  }
+
+  .result__mobile-traits-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Tag 外层框 */
+  .result__mobile-tags {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex: none;
+    margin: 0 16px 12px;
+    padding: 16px 12px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255,255,255,.65);
+    border-radius: 18px;
+    background: rgba(217,217,217,.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .result__mobile-tags span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 6px 12px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255,255,255,.55);
+    border-radius: 10px;
+    background: rgba(255,255,255,.31);
+    color: #A77A36;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  /* 悄悄话 */
+  .result__mobile-whisper {
+    position: relative;
+    z-index: 2;
+    flex: none;
+    margin: 0 16px 14px;
+    padding: 18px 17px;
+    box-sizing: border-box;
+    border: 1px solid #D4B878;
+    border-radius: 22px;
+    background: rgba(250,246,238,.76);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .result__mobile-whisper h2 {
+    margin: 0 0 10px;
+    color: #C18416;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .result__mobile-whisper p {
+    margin: 0;
+    color: #49301D;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* 移动端导航：分享单独一行 */
+  .result__mobile-actions {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex: none;
+    margin: 24px 16px 12px;
+  }
+
+  .result__mobile-actions > .result-button--share {
+    width: min(100%, 340px);
+    min-height: 48px;
+    border-radius: 25px;
+    font-size: 17px;
+  }
+
+  .result__mobile-actions-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: min(100%, 340px);
+  }
+
+  .result__mobile-actions-row .result-button {
+    width: 100%;
+    min-height: 44px;
+    padding: 5px 6px;
+    font-size: 15px;
+  }
+
+  /* 移动端诊断手册 */
+  .result__mobile-diagnostic {
+    position: relative;
+    z-index: 2;
+    flex: none;
+    margin: 8px 16px 12px;
+    padding: 10px 14px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: rgba(44,26,6,.6);
+    color: #C9985A;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .result__footer {
+    position: relative;
+    z-index: 2;
+    flex: none;
+    margin: 4px 12px 0;
+    color: rgba(75,53,34,.65);
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+  }
+}
+
+/* =====================================================
+   小屏手机适配
+===================================================== */
+
+@media (max-width: 360px) {
+  .result__mobile-type {
+    padding-left: 14px;
+  }
+
+  .result__mobile-guardian {
+    padding-right: 14px;
+  }
+
+  .result__mobile-type strong,
+  .result__mobile-guardian strong {
+    font-size: 23px;
+  }
+
+  .result__mobile-badge-image {
+    width: 320px;
+    height: 320px;
+  }
+
+  .result__mobile-character {
+    width: 190px;
+    height: 210px;
+  }
+
+  .result__mobile-tags span {
+    font-size: 13px;
+  }
+
+  .result__mobile-traits-content,
+  .result__mobile-whisper p {
+    font-size: 15px;
+  }
+}
+
+/* =====================================================
+   PC 窄窗口：整体缩放，不改变内部比例
+===================================================== */
+
+@media (min-width: 768px) and (max-width: 1290px) {
+  .result__desktop-frame {
+    transform: scale(calc(100vw / 1290));
+    transform-origin: center center;
+  }
 }
