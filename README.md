@@ -1,3 +1,18 @@
+# Nine Types - Cat Guardians Test
+
+CoverPage
+QuizPage
+ResultPage
+HomePage
+
+When complete the test, there will be up to two results.
+Each result has its own share poster for saving, if there is secondary type of result, then users need to switch to secondary type page to download the poster.
+*Html-to-image function remains untested.
+
+Desktop ver. and Mobile ver. were automatically differed by min-width＞601px.
+
+
+========================
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
