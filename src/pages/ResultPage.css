@@ -1183,3 +1183,48 @@
     object-fit: contain;
   }
 }
+/* =========================================
+   PC：Tag 两行排列 + Whisper 收紧留白
+========================================= */
+
+@media (min-width: 768px) {
+
+  /* Tag 固定两列排列 */
+  .result__tag-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    justify-items: stretch;
+    width: 100%;
+    gap: 7px 8px !important;
+  }
+
+  .result__tag-list span {
+    width: 100%;
+    min-width: 0;
+    min-height: 32px;
+    padding: 4px 6px;
+    box-sizing: border-box;
+    text-align: center;
+    white-space: normal;
+    font-size: 13px !important;
+    line-height: 1.35;
+  }
+
+  /* Whisper 内容框减少内部留白 */
+  .result__whisper {
+    padding: 6px 12px !important;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .result__whisper h2 {
+    margin: 0 0 2px !important;
+    line-height: 1.4;
+  }
+
+  .result__whisper p {
+    margin: 0 !important;
+    line-height: 1.5;
+  }
+}
