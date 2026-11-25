@@ -1,11 +1,12 @@
 
 import { useState } from "react";
 import CoverPage from "./pages/CoverPage";
+import HomePage from "./pages/HomePage";
 import QuizPage from "./pages/QuizPage";
 import ResultPage from "./pages/ResultPage";
 import "./App.css";
 
-type Page = "cover" | "quiz" | "result";
+type Page = "cover" | "quiz" | "result" | "home";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>("cover");
@@ -30,9 +31,13 @@ export default function App() {
         resultName={resultName}
         secondaryName={secondaryName}
         onAgain={() => setCurrentPage("quiz")}
-        onHome={() => setCurrentPage("cover")}
+        onHome={() => setCurrentPage("home")}
       />
     );
+  }
+
+  if (currentPage === "home") {
+    return <HomePage onStart={() => setCurrentPage("quiz")} />;
   }
 
   return (
