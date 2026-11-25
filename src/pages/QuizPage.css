@@ -1999,3 +1999,219 @@ backdrop-filter: blur(4px);
     border-radius: 6px;
   }
 }
+/* =========================================
+   本轮测试页最终修正
+========================================= */
+
+/* -----------------------------------------
+   1. 背景独立于页面内容缩放
+   背景固定在浏览器视口，不跟随 quiz 的 zoom
+----------------------------------------- */
+
+body:has(.quiz) {
+  position: relative;
+}
+
+body:has(.quiz)::before {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/* PC 背景 */
+body:has(.quiz--group-1)::before {
+  background-image: url("/assets/bg/asset_bg_test_pc_01.png");
+}
+
+body:has(.quiz--group-2)::before {
+  background-image: url("/assets/bg/asset_bg_test_pc_02.png");
+}
+
+body:has(.quiz--group-3)::before {
+  background-image: url("/assets/bg/asset_bg_test_pc_03.png");
+}
+
+body:has(.quiz--group-4)::before {
+  background-image: url("/assets/bg/asset_bg_test_pc_04.png");
+}
+
+body:has(.quiz--group-5)::before {
+  background-image: url("/assets/bg/asset_bg_test_pc_05.png");
+}
+
+body:has(.quiz--group-6)::before {
+  background-image: url("/assets/bg/asset_bg_test_pc_06.png");
+}
+
+body:has(.quiz--group-7)::before {
+  background-image: url("/assets/bg/asset_bg_test_pc_07.png");
+}
+
+body:has(.quiz--group-8)::before {
+  background-image: url("/assets/bg/asset_bg_test_pc_08.png");
+}
+
+/* quiz 自身不再显示背景，避免背景重复 */
+.quiz {
+  position: relative;
+  z-index: 1;
+  background-image: none !important;
+  background-color: transparent !important;
+}
+
+/* -----------------------------------------
+   2. PC：内容维持80%缩放
+   背景不受影响
+----------------------------------------- */
+
+@media (min-width: 601px) {
+  .quiz {
+    zoom: 0.8;
+    width: 125%;
+    height: 125vh;
+    min-height: 125vh;
+  }
+
+  /* 猫咪整体下移约5px */
+  .quiz__cat {
+    top: 17px !important;
+  }
+
+  /* 上一题字号缩小2号 */
+  .quiz__previous {
+    font-size: 20px !important;
+  }
+
+  /* 第32题提交弹窗字号统一缩小3号 */
+  .quiz-modal__pc-title,
+  .quiz-modal__pc-subtitle {
+    font-size: 29px !important;
+  }
+
+  .quiz-modal__pc-confirm {
+    font-size: 21px !important;
+  }
+}
+
+/* -----------------------------------------
+   3. Mobile：取消整体 zoom
+   改为自然纵向滚动，避免出画
+----------------------------------------- */
+
+@media (max-width: 600px) {
+  .quiz {
+    zoom: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100svh !important;
+    overflow-x: hidden !important;
+    overflow-y: visible !important;
+    background-image: none !important;
+  }
+
+  /* 移动端背景 */
+  body:has(.quiz--group-1)::before {
+    background-image: url("/assets/bg/asset_bg_test_mobile_01.png");
+  }
+
+  body:has(.quiz--group-2)::before {
+    background-image: url("/assets/bg/asset_bg_test_mobile_02.png");
+  }
+
+  body:has(.quiz--group-3)::before {
+    background-image: url("/assets/bg/asset_bg_test_mobile_03.png");
+  }
+
+  body:has(.quiz--group-4)::before {
+    background-image: url("/assets/bg/asset_bg_test_mobile_04.png");
+  }
+
+  body:has(.quiz--group-5)::before {
+    background-image: url("/assets/bg/asset_bg_test_mobile_05.png");
+  }
+
+  body:has(.quiz--group-6)::before {
+    background-image: url("/assets/bg/asset_bg_test_mobile_06.png");
+  }
+
+  body:has(.quiz--group-7)::before {
+    background-image: url("/assets/bg/asset_bg_test_mobile_07.png");
+  }
+
+  body:has(.quiz--group-8)::before {
+    background-image: url("/assets/bg/asset_bg_test_mobile_08.png");
+  }
+
+  /* 进度条和猫咪仍然固定在页面顶部 */
+  .quiz__cat {
+    top: 80px !important;
+  }
+
+  .quiz__progress {
+    top: 145px !important;
+  }
+
+  /* 题目卡片改为正常文档流
+     页面高度不足时可以向下滚动 */
+  .quiz__question-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: min(316px, calc(100% - 32px)) !important;
+    height: 459px !important;
+    margin: 190px auto 24px !important;
+    overflow: hidden;
+  }
+
+  /* 题号 */
+  .quiz__number {
+    left: 10% !important;
+  }
+
+  /* 问题文字适应卡片宽度 */
+  .quiz__question-heading h1 {
+    left: 10% !important;
+    width: 80% !important;
+  }
+
+  /* 选项适应卡片宽度 */
+  .quiz__options {
+    left: 10% !important;
+    width: 80% !important;
+  }
+
+  .quiz__option {
+    width: 100% !important;
+    min-width: 0;
+  }
+
+  /* 上一题按钮与选项右边缘对齐 */
+  .quiz__previous {
+    top: 28px !important;
+    right: 10% !important;
+    left: auto !important;
+  }
+
+  /* 小屏幕不再使用整体缩放 */
+  @media (max-width: 360px) {
+    .quiz__question-card {
+      width: calc(100% - 24px) !important;
+    }
+
+    .quiz__question-heading h1 {
+      font-size: 14px !important;
+      line-height: 18px !important;
+    }
+
+    .quiz__option-text {
+      font-size: 12px !important;
+      line-height: 15px !important;
+    }
+  }
+}

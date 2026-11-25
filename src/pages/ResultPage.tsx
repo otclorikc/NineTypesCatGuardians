@@ -95,7 +95,7 @@ export default function ResultPage({
           backgroundImage: `url("${profile.background.pc}")`,
         }}
       >
-        <div className="result__desktop-frame">
+        <div className={`result__desktop-frame result__desktop-frame--${profile.id}`}>
           {renderSecondaryControl(
             "result__secondary-control result__secondary-control--pc"
           )}

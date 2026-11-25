@@ -997,12 +997,16 @@
   color: #D7802A !important;
 }
 
-/* PC：伴生体质提示框放大，移至导航按钮上方 */
+
+/* PC：伴生体质提示与报告标题保持同一水平线 */
 .result__secondary-control--pc {
-  top: auto !important;
-  right: 50% !important;
-  bottom: 215px !important;
-  transform: translateX(50%);
+  position: absolute;
+  top: 38px !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
 }
 
 .result__secondary-control--pc button {
@@ -1051,5 +1055,91 @@
     .result__mobile-badge-score--peaceful
   ) strong {
     color: #F7D284 !important;
+  }
+}
+/* =========================================
+   本轮结果页最终修正
+========================================= */
+
+/* PC：06、07 标题颜色 */
+.result__desktop-frame--damp_heat .result__header,
+.result__desktop-frame--blood_stasis .result__header {
+  color: #7F490C !important;
+}
+
+/* PC：08 标题颜色 */
+.result__desktop-frame--qi_stagnation .result__header {
+  color: #C5A059 !important;
+}
+
+/* PC：徽章第一行分数字样 */
+.result__badge-text span {
+  color: #C5A059 !important;
+}
+
+/* PC：tag 稍微放大 */
+.result__tag-list {
+  gap: 8px;
+}
+
+.result__tag-list span {
+  min-height: 34px;
+  padding: 6px 13px;
+  font-size: 14px;
+}
+
+/* PC：伴生提示框与 navigation 拉开距离
+   navigation 和诊断手册保持原有间距 */
+@media (min-width: 768px) {
+  .result__desktop-actions {
+    margin-top: 70px !important;
+  }
+}
+
+/* 移动端：徽章缩小约10%，角色图保持原尺寸 */
+@media (max-width: 767px) {
+  .result__mobile-profile {
+    grid-template-rows: 58px 330px !important;
+  }
+
+  .result__mobile-hero {
+    height: 330px !important;
+  }
+
+  .result__mobile-badge-image {
+    top: -20px !important;
+    left: 50%;
+    width: min(351px, 92vw) !important;
+    height: min(351px, 92vw) !important;
+    max-width: none !important;
+    transform: translateX(-50%);
+  }
+
+  .result__mobile-character {
+    top: 46px !important;
+    left: 50%;
+    width: 206px !important;
+    height: 220px !important;
+    transform: translateX(-50%);
+  }
+
+  /* 小屏幕也保持角色图居中 */
+  .result__mobile-hero img {
+    object-fit: contain;
+  }
+
+  /* 顶部伴生提示框与徽章模块增加约3px间隔 */
+  .result__mobile-secondary-control:not(
+    .result__mobile-secondary-control--bottom
+  ) {
+    margin-bottom: 3px !important;
+  }
+}
+
+/* 更窄的手机：徽章继续按屏幕宽度等比例缩小 */
+@media (max-width: 360px) {
+  .result__mobile-badge-image {
+    width: 92vw !important;
+    height: 92vw !important;
   }
 }
