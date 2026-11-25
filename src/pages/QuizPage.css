@@ -1940,3 +1940,62 @@ backdrop-filter: blur(4px);
     cursor: pointer;
   }
 }
+
+/* =========================================
+   本轮最终调整：QuizPage
+========================================= */
+
+/* PC：整体按80%显示，保持原有内部比例 */
+@media (min-width: 601px) {
+  .quiz {
+    zoom: 0.8;
+    width: 125%;
+    height: 125vh;
+    min-height: 125vh;
+  }
+}
+
+/* Mobile：恢复正常比例，避免继承PC缩放 */
+@media (max-width: 600px) {
+  .quiz {
+    zoom: 1;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+  }
+
+  /* 小屏幕宽度不足时，整体缩小而非裁切 */
+  @media (max-width: 360px) {
+    .quiz {
+      zoom: 0.82;
+      width: 122%;
+      height: 122vh;
+      height: 122dvh;
+      min-height: 122dvh;
+    }
+  }
+
+  /* 第32题提交弹窗整体缩小约30% */
+  .quiz-modal__mobile {
+    width: min(269.5px, calc(100vw - 24px)) !important;
+    aspect-ratio: 385 / 213;
+  }
+
+  /* 弹窗文字随模块缩小 */
+  .quiz-modal__mobile-title,
+  .quiz-modal__mobile-subtitle {
+    font-size: 10.5px !important;
+  }
+
+  /* 提交按钮同步缩小 */
+  .quiz-modal__mobile-confirm {
+    width: 70px !important;
+    min-width: 70px !important;
+    height: 22px !important;
+    min-height: 22px !important;
+    font-size: 8.5px !important;
+    line-height: 11px !important;
+    border-radius: 6px;
+  }
+}

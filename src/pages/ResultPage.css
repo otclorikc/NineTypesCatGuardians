@@ -1,8 +1,8 @@
 
 /* =====================================================
    ResultPage
-   PC：固定比例居中布局
-   Mobile：纵向自然流式布局
+   PC：固定比例居中
+   Mobile：纵向自然滚动
 ===================================================== */
 
 .result {
@@ -13,7 +13,7 @@
 }
 
 /* =====================================================
-   PC
+   PC 页面与外框
 ===================================================== */
 
 .result__desktop {
@@ -22,14 +22,13 @@
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  padding: 0;
+  padding: 24px;
   box-sizing: border-box;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
 
-/* PC 外框：固定 1260 × 800 比例 */
 .result__desktop-frame {
   position: relative;
   width: 1260px;
@@ -38,24 +37,29 @@
   box-sizing: border-box;
   padding: 38px 58px 35px;
   border: 1px solid #C5A059;
-  border-radius: 32px;
+  border-radius: 28px;
   background: rgba(250, 246, 238, 0.2);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
+
+  /* 100% 浏览器缩放时，呈现接近原先 80% 的视觉尺寸 */
+  zoom: 0.8;
 }
 
-/* PC 标题 */
 .result__header {
-  height: 32px;
   display: flex;
   align-items: center;
+  height: 32px;
   color: #553B20;
   font-size: 15px;
   font-weight: 700;
   letter-spacing: 1px;
 }
 
-/* PC 主内容区域 */
+/* =====================================================
+   PC 主内容区
+===================================================== */
+
 .result__desktop-content {
   display: grid;
   grid-template-columns: 341px minmax(0, 1fr);
@@ -64,9 +68,7 @@
   margin-top: 20px;
 }
 
-/* =====================================================
-   PC 左侧角色框
-===================================================== */
+/* 左侧角色框 */
 
 .result__portrait {
   position: relative;
@@ -78,7 +80,7 @@
   box-sizing: border-box;
   padding-top: 12px;
   overflow: hidden;
-  border: 2px solid #C5A059;
+  border: 1px solid #C5A059;
   border-radius: 25px;
   background: rgba(245, 239, 227, 0.2);
   backdrop-filter: blur(4px);
@@ -113,9 +115,7 @@
   font-weight: 700;
 }
 
-/* =====================================================
-   PC 右侧内容
-===================================================== */
+/* 右侧内容 */
 
 .result__details {
   position: relative;
@@ -144,7 +144,10 @@
   line-height: 1.3;
 }
 
-/* PC 核心特质 */
+/* =====================================================
+   PC 核心特质
+===================================================== */
+
 .result__traits {
   position: relative;
   display: flex;
@@ -162,6 +165,8 @@
 }
 
 .result__traits h2 {
+  position: relative;
+  z-index: 2;
   flex: none;
   margin: 0 0 10px;
   color: #8C6D37;
@@ -170,6 +175,8 @@
 }
 
 .result__traits-scroll {
+  position: relative;
+  z-index: 2;
   min-height: 0;
   overflow-y: auto;
   padding-right: 12px;
@@ -199,7 +206,7 @@
 }
 
 /* =====================================================
-   PC Tag + Whisper 横向模块
+   PC Tag 与悄悄话
 ===================================================== */
 
 .result__support {
@@ -211,14 +218,15 @@
   margin-top: 16px;
 }
 
-/* Tag 外层 */
+/* Tag 外框 */
+
 .result__tags {
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 0;
   box-sizing: border-box;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid rgba(212,195,163,.7);
   border-radius: 16px;
   background: rgba(250,246,238,.2);
@@ -231,27 +239,28 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 9px;
 }
 
 .result__tag-list span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 27px;
-  padding: 4px 9px;
+  min-height: 32px;
+  padding: 5px 12px;
   box-sizing: border-box;
-  border: 1px solid rgba(255,255,255,.25);
+  border: 1px solid rgba(255,255,255,.35);
   border-radius: 10px;
   background: rgba(255,255,255,.31);
   color: #624721;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.4;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 
 /* 悄悄话 */
+
 .result__whisper {
   display: flex;
   flex-direction: column;
@@ -281,19 +290,19 @@
 }
 
 /* =====================================================
-   PC 徽章：覆盖在内容框右上方
+   PC 徽章
 ===================================================== */
 
 .result__badge {
   position: absolute;
   z-index: 10;
-  top: -15px;
+  top: -20px;
   right: 2px;
-  width: 200px;
-  height: 194px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 200px;
+  height: 194px;
 }
 
 .result__badge img {
@@ -323,13 +332,14 @@
 }
 
 .result__badge-text strong {
+  color: #D7802A;
   font-size: 17px;
   line-height: 1.5;
   font-weight: 700;
 }
 
 /* =====================================================
-   PC 伴生按钮
+   PC 伴生体质提示
 ===================================================== */
 
 .result__secondary-control--pc {
@@ -340,20 +350,21 @@
 }
 
 .result__secondary-control--pc button {
-  min-height: 30px;
-  padding: 5px 14px;
-  border: 1px solid rgba(197,160,89,.5);
-  border-radius: 16px;
-  background: rgba(250,246,238,.55);
+  min-height: 36px;
+  padding: 7px 18px;
+  border: 1px solid rgba(197,160,89,.65);
+  border-radius: 18px;
+  background: rgba(250,246,238,.65);
   color: #6B5949;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
   backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 /* =====================================================
-   PC 导航
+   PC navigation
 ===================================================== */
 
 .result__desktop-actions {
@@ -397,6 +408,7 @@
 }
 
 /* PC 诊断手册 */
+
 .result__diagnostic {
   margin: 30px 0 0;
   color: rgba(140,109,55,.79);
@@ -407,7 +419,7 @@
 }
 
 /* =====================================================
-   Mobile
+   Mobile 默认隐藏
 ===================================================== */
 
 .result__mobile {
@@ -494,7 +506,6 @@
 ===================================================== */
 
 @media (max-width: 767px) {
-
   .result__desktop {
     display: none;
   }
@@ -508,7 +519,7 @@
     min-height: 100vh;
     padding-bottom: 20px;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: visible;
     background-position: center top;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -524,7 +535,7 @@
     pointer-events: none;
   }
 
-  /* 顶部导航磨砂 + 白色 20% */
+  /* 顶部导航：磨砂 + 白色 20% */
   .result__mobile-header {
     position: relative;
     z-index: 2;
@@ -545,14 +556,14 @@
     -webkit-backdrop-filter: blur(4px);
   }
 
-  /* 伴生体质按钮放在标题下方，不再覆盖主体内容 */
+  /* 伴生体质提示：顶部 */
   .result__mobile-secondary-control {
     position: relative;
     z-index: 5;
     display: flex;
     justify-content: center;
     flex: none;
-    margin: 8px 0 0;
+    margin: 8px 12px 0;
   }
 
   .result__mobile-secondary-control button {
@@ -560,7 +571,7 @@
     padding: 5px 14px;
     border: 1px solid rgba(197,160,89,.5);
     border-radius: 16px;
-    background: rgba(250,246,238,.55);
+    background: rgba(250,246,238,.65);
     color: #6B5949;
     font-family: inherit;
     font-size: 12px;
@@ -569,16 +580,16 @@
     -webkit-backdrop-filter: blur(6px);
   }
 
-  /* 角色区域 */
+  /* 角色区：缩短纵向占位 */
   .result__mobile-profile {
     position: relative;
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    grid-template-rows: 70px 390px;
+    grid-template-rows: 58px 270px;
     align-items: start;
     flex: none;
     width: 100%;
-    margin: 8px auto 0;
+    margin: 4px auto 0;
   }
 
   .result__mobile-type {
@@ -588,7 +599,7 @@
     flex-direction: column;
     align-items: flex-start;
     padding-left: 22px;
-    padding-top: 8px;
+    padding-top: 5px;
   }
 
   .result__mobile-type span,
@@ -612,7 +623,7 @@
     flex-direction: column;
     align-items: flex-end;
     padding-right: 22px;
-    padding-top: 8px;
+    padding-top: 5px;
   }
 
   .result__mobile-guardian strong {
@@ -622,7 +633,7 @@
     line-height: 1.3;
   }
 
-  /* 中间徽章分数框 */
+  /* 徽章分数框 */
   .result__mobile-badge-score {
     position: relative;
     z-index: 4;
@@ -634,7 +645,7 @@
     justify-content: center;
     width: 90px;
     min-height: 47px;
-    margin-top: 4px;
+    margin-top: 2px;
     padding: 4px 2px;
     box-sizing: border-box;
     border: 1px solid rgba(107,75,27,.2);
@@ -652,27 +663,40 @@
   }
 
   .result__mobile-badge-score strong {
-    color: #DF5858;
     font-size: 15px;
     line-height: 17px;
   }
 
-  /* 徽章圆环在后，角色图在前 */
+  /* 平和质：第一行隐藏，第二行保持原粉色 */
+  .result__mobile-badge-score--peaceful span {
+    display: none;
+  }
+
+  .result__mobile-badge-score--peaceful strong {
+    color: #DF5858;
+  }
+
+  /* 结果 02–09：第二行统一为浅金色 */
+  .result__mobile-badge-score--other strong {
+    color: #F7D284;
+  }
+
+  /* 徽章图片在后，角色图在前 */
   .result__mobile-hero {
     position: relative;
     grid-column: 1 / 4;
     grid-row: 2;
     width: 100%;
-    height: 390px;
+    height: 270px;
   }
 
   .result__mobile-badge-image {
     position: absolute;
     z-index: 1;
-    top: 5px;
+    top: -3px;
     left: 50%;
-    width: 350px;
-    height: 350px;
+    width: 280px;
+    height: 280px;
     max-width: 100%;
     transform: translateX(-50%);
     object-fit: contain;
@@ -681,7 +705,7 @@
   .result__mobile-character {
     position: absolute;
     z-index: 2;
-    top: 105px;
+    top: 35px;
     left: 50%;
     width: 206px;
     height: 220px;
@@ -694,18 +718,18 @@
     position: relative;
     z-index: 2;
     flex: none;
-    margin: 0 16px 12px;
-    padding: 18px 17px;
+    margin: 0 16px 10px;
+    padding: 16px 16px;
     box-sizing: border-box;
     border: 1px solid #D4B878;
-    border-radius: 22px;
+    border-radius: 20px;
     background: rgba(250,246,238,.76);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
   }
 
   .result__mobile-traits h2 {
-    margin: 0 0 12px;
+    margin: 0 0 10px;
     color: #8C5B17;
     font-size: 17px;
     font-weight: 700;
@@ -714,18 +738,18 @@
   .result__mobile-traits-content {
     color: #49301D;
     font-size: 16px;
-    line-height: 1.75;
+    line-height: 1.7;
   }
 
   .result__mobile-traits-content p {
-    margin: 0 0 14px;
+    margin: 0 0 12px;
   }
 
   .result__mobile-traits-content p:last-child {
     margin-bottom: 0;
   }
 
-  /* Tag 外层框 */
+  /* Tag 外框 */
   .result__mobile-tags {
     position: relative;
     z-index: 2;
@@ -733,10 +757,10 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 9px;
     flex: none;
-    margin: 0 16px 12px;
-    padding: 16px 12px;
+    margin: 0 16px 10px;
+    padding: 13px 11px;
     box-sizing: border-box;
     border: 1px solid rgba(255,255,255,.65);
     border-radius: 18px;
@@ -749,8 +773,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 36px;
-    padding: 6px 12px;
+    min-height: 34px;
+    padding: 5px 11px;
     box-sizing: border-box;
     border: 1px solid rgba(255,255,255,.55);
     border-radius: 10px;
@@ -768,18 +792,18 @@
     position: relative;
     z-index: 2;
     flex: none;
-    margin: 0 16px 14px;
-    padding: 18px 17px;
+    margin: 0 16px 10px;
+    padding: 16px;
     box-sizing: border-box;
     border: 1px solid #D4B878;
-    border-radius: 22px;
+    border-radius: 20px;
     background: rgba(250,246,238,.76);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
   }
 
   .result__mobile-whisper h2 {
-    margin: 0 0 10px;
+    margin: 0 0 8px;
     color: #C18416;
     font-size: 16px;
     font-weight: 700;
@@ -789,24 +813,29 @@
     margin: 0;
     color: #49301D;
     font-size: 16px;
-    line-height: 1.7;
+    line-height: 1.65;
   }
 
-  /* 移动端导航：分享单独一行 */
+  /* 伴生体质提示：内容底部、navigation 上方 */
+  .result__mobile-secondary-control--bottom {
+    margin: 2px 12px 8px;
+  }
+
+  /* Mobile navigation */
   .result__mobile-actions {
     position: relative;
     z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     flex: none;
-    margin: 24px 16px 12px;
+    margin: 12px 16px 10px;
   }
 
   .result__mobile-actions > .result-button--share {
     width: min(100%, 340px);
-    min-height: 48px;
+    min-height: 46px;
     border-radius: 25px;
     font-size: 17px;
   }
@@ -814,18 +843,18 @@
   .result__mobile-actions-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 9px;
     width: min(100%, 340px);
   }
 
   .result__mobile-actions-row .result-button {
     width: 100%;
-    min-height: 44px;
+    min-height: 42px;
     padding: 5px 6px;
     font-size: 15px;
   }
 
-  /* 移动端诊断手册 */
+  /* 移动端诊断手册：不加粗 */
   .result__mobile-diagnostic {
     position: relative;
     z-index: 2;
@@ -876,11 +905,12 @@
   }
 
   .result__mobile-badge-image {
-    width: 320px;
-    height: 320px;
+    width: 260px;
+    height: 260px;
   }
 
   .result__mobile-character {
+    top: 32px;
     width: 190px;
     height: 210px;
   }
@@ -896,12 +926,130 @@
 }
 
 /* =====================================================
-   PC 窄窗口：整体缩放，不改变内部比例
+   PC 窗口适配
+   固定内部设计比例，按窗口尺寸整体缩小
 ===================================================== */
 
-@media (min-width: 768px) and (max-width: 1290px) {
+@media (min-width: 1200px) and (max-width: 1399px) {
   .result__desktop-frame {
-    transform: scale(calc(100vw / 1290));
+    zoom: 0.72;
+  }
+}
+
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .result__desktop-frame {
+    zoom: 0.62;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 999px) {
+  .result__desktop-frame {
+    zoom: 0.52;
+  }
+}
+
+/* =========================================
+   本轮最终调整：ResultPage
+========================================= */
+
+/* PC：整体固定缩放至 85%，取消旧的 transform 缩放 */
+@media (min-width: 768px) {
+  .result__desktop-frame {
+    zoom: 0.85;
+    transform: none !important;
     transform-origin: center center;
+  }
+}
+
+/* PC：较窄窗口时继续缩小，避免内容出画 */
+@media (min-width: 768px) and (max-width: 899px) {
+  .result__desktop-frame { zoom: 0.55; }
+}
+
+@media (min-width: 900px) and (max-width: 1023px) {
+  .result__desktop-frame { zoom: 0.62; }
+}
+
+@media (min-width: 1024px) and (max-width: 1149px) {
+  .result__desktop-frame { zoom: 0.68; }
+}
+
+@media (min-width: 1150px) and (max-width: 1279px) {
+  .result__desktop-frame { zoom: 0.76; }
+}
+
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .result__desktop-frame { zoom: 0.82; }
+}
+
+/* PC：诊断手册颜色 */
+.result__diagnostic {
+  color: #54402A !important;
+}
+
+/* PC：徽章文字放大 */
+.result__badge-text span {
+  font-size: 12px !important;
+}
+
+.result__badge-text strong {
+  font-size: 19px !important;
+  color: #D7802A !important;
+}
+
+/* PC：伴生体质提示框放大，移至导航按钮上方 */
+.result__secondary-control--pc {
+  top: auto !important;
+  right: 50% !important;
+  bottom: 215px !important;
+  transform: translateX(50%);
+}
+
+.result__secondary-control--pc button {
+  min-height: 39px;
+  padding: 7px 19px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 20px;
+}
+
+/* =========================================
+   Mobile
+========================================= */
+
+@media (max-width: 767px) {
+
+  /* 顶部导航：黑色20%透明度 + 磨砂
+     高度由52px缩至47px */
+  .result__mobile-header {
+    height: 47px !important;
+    background: rgba(0, 0, 0, 0.2) !important;
+    border-bottom: 1px solid rgba(255,255,255,.35);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+
+  /* 徽章圆环放大 */
+  .result__mobile-badge-image {
+    width: 390px !important;
+    height: 390px !important;
+    max-width: 100%;
+  }
+
+  /* 角色图保持在徽章前方 */
+  .result__mobile-character {
+    z-index: 2;
+  }
+
+  /* 01 平和质：保留原本红色 */
+  .result__mobile-badge-score--peaceful strong {
+    color: #DF5858 !important;
+  }
+
+  /* 02—09：统一浅金色 */
+  .result__mobile-badge-score:not(
+    .result__mobile-badge-score--peaceful
+  ) strong {
+    color: #F7D284 !important;
   }
 }

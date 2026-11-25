@@ -55,7 +55,9 @@ export default function ResultPage({
     profile.mobile?.diagnosticNote ||
     defaultDiagnosticNote;
 
-  const badgeParts = profile.badgeText.split(" ");
+  const badgeParts = profile.badgeText.trim().split(/\s+/);
+  const badgeCaption = badgeParts[0];
+  const badgeName = badgeParts.slice(1).join(" ");
 
   function viewSecondary() {
     setHasViewedSecondary(true);
@@ -94,7 +96,6 @@ export default function ResultPage({
         }}
       >
         <div className="result__desktop-frame">
-
           {renderSecondaryControl(
             "result__secondary-control result__secondary-control--pc"
           )}
@@ -104,10 +105,7 @@ export default function ResultPage({
           </header>
 
           <div className="result__desktop-content">
-
-            {/* 左侧角色区域 */}
             <div className="result__portrait">
-
               <div className="result__portrait-title">
                 守护星
               </div>
@@ -121,18 +119,14 @@ export default function ResultPage({
               <strong className="result__guardian-name">
                 {profile.characterName}
               </strong>
-
             </div>
 
-            {/* 右侧内容区域 */}
             <div className="result__details">
-
               <div className="result__type">
                 <span>你的体质是</span>
                 <h1>{profile.typeName}</h1>
               </div>
 
-              {/* 核心特质 */}
               <section className="result__traits">
                 <h2>★ 核心特质</h2>
 
@@ -143,9 +137,7 @@ export default function ResultPage({
                 </div>
               </section>
 
-              {/* Tag 与悄悄话横向排列 */}
               <div className="result__support">
-
                 <section className="result__tags">
                   <div className="result__tag-list">
                     {profile.tags.map((tag) => (
@@ -158,28 +150,21 @@ export default function ResultPage({
                   <h2>{profile.whisperTitle}</h2>
                   <p>{profile.whisperText}</p>
                 </section>
-
               </div>
-
             </div>
           </div>
 
-          {/* PC 徽章：覆盖在内容框右上方 */}
+          {/* PC 徽章：文字覆盖在徽章图片上 */}
           <div className="result__badge">
-            <img
-              src={profile.badgeImage}
-              alt=""
-            />
+            <img src={profile.badgeImage} alt="" />
 
             <div className="result__badge-text">
-              <span>{badgeParts[0]}</span>
-              <strong>{badgeParts.slice(1).join(" ")}</strong>
+              <span>{badgeCaption}</span>
+              <strong>{badgeName}</strong>
             </div>
           </div>
 
-          {/* PC 导航 */}
           <nav className="result__desktop-actions">
-
             <button
               className="result-button result-button--again"
               type="button"
@@ -203,13 +188,11 @@ export default function ResultPage({
             >
               ✦ 还不够，看喵喵全家福 ✦
             </button>
-
           </nav>
 
           <p className="result__diagnostic">
             {diagnosticNote}
           </p>
-
         </div>
       </section>
 
@@ -220,7 +203,6 @@ export default function ResultPage({
           backgroundImage: `url("${profile.background.mobile}")`,
         }}
       >
-
         <header className="result__mobile-header">
           ✦ 时愈堂 · 专属把脉报告 ✦
         </header>
@@ -229,17 +211,21 @@ export default function ResultPage({
           "result__mobile-secondary-control"
         )}
 
-        {/* 移动端角色区 */}
         <section className="result__mobile-profile">
-
           <div className="result__mobile-type">
             <span>你的体质是</span>
             <strong>{profile.typeName}</strong>
           </div>
 
-          <div className="result__mobile-badge-score">
-            <span>{badgeParts[0]}</span>
-            <strong>{badgeParts.slice(1).join(" ")}</strong>
+          <div
+            className={`result__mobile-badge-score ${
+              profile.id === "peaceful"
+                ? "result__mobile-badge-score--peaceful"
+                : "result__mobile-badge-score--other"
+            }`}
+          >
+            <span>{badgeCaption}</span>
+            <strong>{badgeName}</strong>
           </div>
 
           <div className="result__mobile-guardian">
@@ -248,26 +234,20 @@ export default function ResultPage({
           </div>
 
           <div className="result__mobile-hero">
-
-            {/* 徽章图在后 */}
             <img
               className="result__mobile-badge-image"
               src={profile.badgeImage}
               alt=""
             />
 
-            {/* 角色图在前 */}
             <img
               className="result__mobile-character"
               src={profile.characterImage}
               alt={profile.characterName}
             />
-
           </div>
-
         </section>
 
-        {/* 核心特质 */}
         <section className="result__mobile-traits">
           <h2>★ 核心特质</h2>
 
@@ -278,22 +258,23 @@ export default function ResultPage({
           </div>
         </section>
 
-        {/* Tag */}
         <section className="result__mobile-tags">
           {profile.tags.map((tag) => (
             <span key={tag}>{tag}</span>
           ))}
         </section>
 
-        {/* 悄悄话 */}
         <section className="result__mobile-whisper">
           <h2>{profile.whisperTitle}</h2>
           <p>{profile.whisperText}</p>
         </section>
 
-        {/* 移动端导航 */}
-        <nav className="result__mobile-actions">
+        {/* 内容阅读结束后，再提供一次伴生体质切换入口 */}
+        {renderSecondaryControl(
+          "result__mobile-secondary-control result__mobile-secondary-control--bottom"
+        )}
 
+        <nav className="result__mobile-actions">
           <button
             className="result-button result-button--share"
             type="button"
@@ -303,7 +284,6 @@ export default function ResultPage({
           </button>
 
           <div className="result__mobile-actions-row">
-
             <button
               className="result-button result-button--again"
               type="button"
@@ -319,12 +299,9 @@ export default function ResultPage({
             >
               ✦ 喵喵全家福 ✦
             </button>
-
           </div>
-
         </nav>
 
-        {/* 诊断手册 */}
         <p className="result__mobile-diagnostic">
           {diagnosticNote}
         </p>
@@ -332,7 +309,6 @@ export default function ResultPage({
         <footer className="result__footer">
           《异境凉茶铺》 | 九大体质檐主守护星潮玩系列 | 深圳千雪影业有限公司
         </footer>
-
       </section>
 
       {/* ================= 分享弹窗 ================= */}
@@ -376,7 +352,6 @@ export default function ResultPage({
           </div>
         </div>
       )}
-
     </main>
   );
 }
