@@ -1143,3 +1143,43 @@
     height: 92vw !important;
   }
 }
+/* =========================================
+   Mobile：徽章与角色图统一等比例缩放
+========================================= */
+
+@media (max-width: 767px) {
+  /* 以结果页角色区域的宽度作为统一缩放基准 */
+  .result__mobile-profile {
+    container-type: inline-size;
+    grid-template-rows: 58px 84.6cqw !important;
+  }
+
+  /* 图片共同所在的父容器 */
+  .result__mobile-hero {
+    width: 100%;
+    height: 84.6cqw !important;
+  }
+
+  /* 徽章：宽高、顶部位置都随父容器缩放 */
+  .result__mobile-badge-image {
+    position: absolute;
+    top: -5.1cqw !important;
+    left: 50%;
+    width: 90cqw !important;
+    height: 90cqw !important;
+    max-width: none !important;
+    transform: translateX(-50%);
+    object-fit: contain;
+  }
+
+  /* 角色：与徽章使用同一个缩放基准 */
+  .result__mobile-character {
+    position: absolute;
+    top: 11.8cqw !important;
+    left: 50%;
+    width: 52.8cqw !important;
+    height: 56.4cqw !important;
+    transform: translateX(-50%);
+    object-fit: contain;
+  }
+}
