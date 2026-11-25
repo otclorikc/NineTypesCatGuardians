@@ -1228,3 +1228,8 @@
     line-height: 1.5;
   }
 }
+@media (min-width: 768px) {
+  .result__support {
+    grid-template-columns: 45% minmax(0, 1fr) !important;
+  }
+}
