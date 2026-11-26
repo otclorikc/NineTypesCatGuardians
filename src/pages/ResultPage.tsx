@@ -159,9 +159,22 @@ export default function ResultPage({
             <img src={profile.badgeImage} alt="" />
 
             <div className="result__badge-text">
-              <span>{badgeCaption}</span>
-              <strong>{badgeName}</strong>
-            </div>
+  <span>{badgeCaption}</span>
+  <strong>
+    {profile.id === "peaceful" ? (
+      <>
+        <span className="result__peaceful-badge-caption">
+          隐藏款
+        </span>
+        <span className="result__peaceful-badge-name">
+          天选星人
+        </span>
+      </>
+    ) : (
+      badgeName
+    )}
+  </strong>
+</div>
           </div>
 
           <nav className="result__desktop-actions">
@@ -225,7 +238,20 @@ export default function ResultPage({
             }`}
           >
             <span>{badgeCaption}</span>
-            <strong>{badgeName}</strong>
+<strong>
+  {profile.id === "peaceful" ? (
+    <>
+      <span className="result__peaceful-badge-caption">
+        隐藏款
+      </span>
+      <span className="result__peaceful-badge-name">
+        天选星人
+      </span>
+    </>
+  ) : (
+    badgeName
+  )}
+</strong>
           </div>
 
           <div className="result__mobile-guardian">

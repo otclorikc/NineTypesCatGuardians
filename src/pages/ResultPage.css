@@ -1233,3 +1233,52 @@
     grid-template-columns: 45% minmax(0, 1fr) !important;
   }
 }
+
+/* =========================================
+   01 天选喵：徽章文案分行
+========================================= */
+
+/* PC */
+.result__badge-text strong {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.result__badge-text strong .result__peaceful-badge-caption {
+  font-size: 12px !important;
+  line-height: 1.5;
+}
+
+.result__badge-text strong .result__peaceful-badge-name {
+  font-size: 19px !important;
+  line-height: 1.5;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  /* 只隐藏原本的第一行分数，不隐藏新增加的两行文字 */
+  .result__mobile-badge-score--peaceful > span {
+    display: none !important;
+  }
+
+  .result__mobile-badge-score--peaceful strong {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .result__mobile-badge-score--peaceful
+    .result__peaceful-badge-caption {
+    display: block !important;
+    font-size: 12px !important;
+    line-height: 16px;
+  }
+
+  .result__mobile-badge-score--peaceful
+    .result__peaceful-badge-name {
+    display: block !important;
+    font-size: 15px !important;
+    line-height: 18px;
+  }
+}

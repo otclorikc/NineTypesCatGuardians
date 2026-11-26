@@ -679,3 +679,43 @@
     margin-top: 17px;
   }
 }
+
+/* PC：合照标题与卡片组件作为整体垂直居中 */
+@media (min-width: 601px) {
+  .home__gallery {
+    justify-content: center;
+  }
+
+  .home__carousel--pc {
+    height: 218px;
+    min-height: 218px;
+    flex: none;
+  }
+
+  /* 外部视频、公益模块尺寸保持不变 */
+  .home__media-panel,
+  .home__support-panel {
+    box-sizing: border-box;
+  }
+
+  /* 只放大内部黑色内容框 */
+  .home__media-placeholder,
+  .home__support-placeholder {
+    width: 70%;
+    height: 70%;
+    min-height: 0;
+    margin: auto;
+  }
+}
+
+/* Mobile：完整显示合照组件，并收紧与视频模块的间距 */
+@media (max-width: 600px) {
+  .home__gallery {
+      height: 406px;
+        }
+
+          .home__bottom {
+              margin-top: 8px;
+                }
+                }
+                
