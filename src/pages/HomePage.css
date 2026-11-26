@@ -569,3 +569,68 @@
     font-size: 10px;
   }
 }
+
+/* =========================================
+   HomePage 最终视觉微调
+========================================= */
+
+/* PC：合照框加高，保证选中卡片完整显示 */
+@media (min-width: 601px) {
+  .home__gallery {
+    height: 40%;
+    min-height: 360px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .home__carousel--pc {
+    height: auto;
+    min-height: 218px;
+    flex: 1;
+  }
+
+  /* PC：顶部导航磨砂玻璃 */
+  .home__nav {
+    border-radius: 16px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  /* PC：视频及公益模块磨砂玻璃 */
+  .home__media-panel,
+  .home__support-panel {
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* PC：视频及公益内容框缩小约30% */
+  .home__media-placeholder,
+  .home__support-placeholder {
+    width: 70%;
+    height: 70%;
+    min-height: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Mobile：合照模组整体缩小20% */
+@media (max-width: 600px) {
+  .home__carousel--mobile {
+    width: 125%;
+    margin-left: -12.5%;
+    transform: scale(0.8);
+    transform-origin: top center;
+  }
+
+  /* 未选中卡片描边 */
+  .home__card--mobile {
+    border-width: 1px;
+  }
+
+  /* 选中卡片描边 */
+  .home__card--mobile.is-selected {
+    border-width: 2px;
+  }
+}
