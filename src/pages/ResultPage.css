@@ -1282,3 +1282,18 @@
     line-height: 18px;
   }
 }
+/* PC：恢复天选喵徽章原本的颜色 */
+.result__badge-text strong .result__peaceful-badge-caption,
+.result__badge-text strong .result__peaceful-badge-name {
+  color: #D7802A !important;
+}
+
+/* Mobile：恢复天选喵徽章原本的颜色 */
+@media (max-width: 767px) {
+  .result__mobile-badge-score--peaceful
+    .result__peaceful-badge-caption,
+  .result__mobile-badge-score--peaceful
+    .result__peaceful-badge-name {
+    color: #DF5858 !important;
+  }
+}
