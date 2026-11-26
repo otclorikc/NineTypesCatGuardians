@@ -1305,3 +1305,15 @@
     color: #A57E3C !important;
   }
 }
+/* 分享弹窗整体缩放 */
+.result-share__panel {
+  transform: scale(0.7);
+  transform-origin: center center;
+}
+
+/* 移动端：整体缩小20% */
+@media (max-width: 767px) {
+  .result-share__panel {
+    transform: scale(0.8);
+  }
+}

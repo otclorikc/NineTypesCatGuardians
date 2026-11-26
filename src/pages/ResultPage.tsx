@@ -67,6 +67,7 @@ useLayoutEffect(() => {
 const posterRef = useRef<HTMLImageElement>(null);
 const [isDownloading, setIsDownloading] = useState(false);
 
+
   function viewSecondary() {
     setHasViewedSecondary(true);
     setShowSecondary(true);
@@ -76,103 +77,84 @@ const [isDownloading, setIsDownloading] = useState(false);
     setShowSecondary((current) => !current);
   }
 
-  function renderSecondaryControl(className: string) {
-if (!secondaryProfile) return null;
+  // 下载海报：必须放在 ResultPage 组件作用域内
+  async function downloadPoster() {
+    const image = posterRef.current;
 
-async function downloadPoster() {
-  const image = posterRef.current;
-  if (!image || isDownloading) return;
+    if (!image || isDownloading) return;
 
-  setIsDownloading(true);
+    setIsDownloading(true);
 
-  try {
-    if (!image.complete) {
-      await new Promise<void>((resolve, reject) => {
-        image.addEventListener("load", () => resolve(), { once: true });
-        image.addEventListener(
-          "error",
-          () => reject(new Error("海报加载失败")),
-          { once: true }
-        );
-      });
-    }
-
-    if (!image.naturalWidth || !image.naturalHeight) {
-      throw new Error("海报图片无效");
-    }
-
-    let blob: Blob | null = null;
-
-    // 优先使用 html-to-image 生成 PNG
     try {
-      blob = await toBlob(image, {
+      // 等待海报图片加载完成
+      if (!image.complete) {
+        await new Promise<void>((resolve, reject) => {
+          image.addEventListener("load", () => resolve(), {
+            once: true,
+          });
+
+          image.addEventListener(
+            "error",
+            () => reject(new Error("海报加载失败")),
+            { once: true }
+          );
+        });
+      }
+
+      if (!image.naturalWidth || !image.naturalHeight) {
+        throw new Error("海报图片无效");
+      }
+
+      // 使用 html-to-image 生成 PNG
+      const blob = await toBlob(image, {
         cacheBust: true,
-        width: image.naturalWidth,
-        height: image.naturalHeight,
-        pixelRatio: 1,
-        style: {
-          width: `${image.naturalWidth}px`,
-          height: `${image.naturalHeight}px`,
-          maxWidth: "none",
-          maxHeight: "none",
-        },
+        pixelRatio: 2,
       });
+
+      if (!blob || blob.size === 0) {
+        throw new Error("PNG 图片生成失败");
+      }
+
+      // 检查 PNG 文件签名，避免下载到 HTML
+      const signature = new Uint8Array(
+        await blob.slice(0, 8).arrayBuffer()
+      );
+
+      const validPng =
+        signature[0] === 0x89 &&
+        signature[1] === 0x50 &&
+        signature[2] === 0x4e &&
+        signature[3] === 0x47;
+
+      if (!validPng) {
+        throw new Error("生成的文件不是有效 PNG");
+      }
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = `${profile.characterName}.png`;
+
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      window.setTimeout(() => {
+        URL.revokeObjectURL(url);
+      }, 60000);
     } catch (error) {
-      console.warn("海报截图生成失败，尝试获取原始图片", error);
+      console.error("海报下载失败：", error);
+      window.alert("海报生成失败，请重新打开分享弹窗后再试。");
+    } finally {
+      setIsDownloading(false);
     }
-
-    // 截图失败时，回退到原始 PNG 图片
-    if (!blob || blob.type !== "image/png" || blob.size === 0) {
-      const response = await fetch(profile.share.posterImage, {
-        cache: "no-store",
-      });
-
-      if (!response.ok) {
-        throw new Error("无法获取海报图片");
-      }
-
-      const contentType = response.headers.get("content-type") || "";
-
-      if (!contentType.startsWith("image/")) {
-        throw new Error("服务器返回的不是图片文件");
-      }
-
-      blob = await response.blob();
-    }
-
-    // 检查文件确实是 PNG，而不是 HTML
-    const signature = new Uint8Array(
-      await blob.slice(0, 8).arrayBuffer()
-    );
-
-    const validPng =
-      signature[0] === 0x89 &&
-      signature[1] === 0x50 &&
-      signature[2] === 0x4e &&
-      signature[3] === 0x47;
-
-    if (!validPng) {
-      throw new Error("生成的文件不是有效 PNG");
-    }
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = `share-poster-${profile.id}.png`;
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    window.setTimeout(() => URL.revokeObjectURL(url), 60000);
-  } catch (error) {
-    console.error("海报下载失败：", error);
-    window.alert("海报生成失败，请重新打开分享弹窗后再试。");
-  } finally {
-    setIsDownloading(false);
   }
-}
+
+  // 伴生体质切换按钮
+  function renderSecondaryControl(className: string) {
+    if (!secondaryProfile) return null;
+
     return (
       <div className={className}>
         {!hasViewedSecondary ? (
