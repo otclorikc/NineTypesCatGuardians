@@ -1,579 +1,571 @@
-
 /* =========================
-   HomePage 首页合照
+   HomePage 首页
 ========================= */
 
 .home {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  color: #54402a;
+  background: #f1e2c8 url("/assets/bg/asset_bg_home_pc.png")
+    center / cover no-repeat;
+  font-family: "Noto Sans SC", sans-serif;
+}
+
+/* 顶部导航 */
+
+.home__nav {
+  position: absolute;
+  z-index: 20;
+  top: 4.44%;
+  left: 4.17%;
+  right: 4.17%;
+  height: 7.22%;
+  min-height: 54px;
+  box-sizing: border-box;
+  padding: 0 2.4%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(241, 217, 194, 0.44);
+}
+
+.home__brand {
+  color: #54402a;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.home__nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.home__button {
+  min-width: 162px;
+  height: 36px;
+  box-sizing: border-box;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.home__button--primary {
+  border: 0;
+  color: #fffdf8;
+  background: linear-gradient(
+    180deg,
+    #e0a23b 0%,
+    #c58421 50%,
+    #995e12 100%
+  );
+  cursor: pointer;
+}
+
+.home__button--secondary {
+  min-width: 162px;
+  border: 1px solid #d4a843;
+  color: #faf5ee;
+  background: #251e18;
+}
+
+/* =========================
+   合照模块 PC
+========================= */
+
+.home__gallery {
+  position: absolute;
+  top: 13.33%;
+  left: 4.17%;
+  right: 4.17%;
+  height: 37.78%;
+  box-sizing: border-box;
+  padding: 24px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(92, 64, 22, 0.62);
+  border-radius: 24px;
+  background: rgba(20, 17, 14, 0.1);
+}
+
+.home__gallery-heading {
+  flex: none;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home__gallery-heading h1 {
+  margin: 0;
+  color: #5c4016;
+  font-size: 28px;
+  line-height: 34px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* PC 卡片排列：交叠、选中居中 */
+
+.home__carousel--pc {
+  position: relative;
+  width: 100%;
+  height: 218px;
+  flex: none;
+  overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+}
+
+.home__carousel--pc:active {
+  cursor: grabbing;
+}
+
+.home__card {
+  position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 10px 16px;
+  border: 2px solid #e5c07b;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-image:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+    var(--card-bg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    left 0.32s ease,
+    top 0.32s ease,
+    width 0.32s ease,
+    height 0.32s ease,
+    transform 0.32s ease,
+    opacity 0.32s ease;
+}
+
+.home__card--pc {
+  width: 220px;
+  height: 138px;
+  left: calc(50% + var(--card-offset) * 110px);
+  top: 40px;
+  transform: translateX(-50%);
+  z-index: calc(10 - var(--card-depth));
+}
+
+.home__card--pc.is-selected {
+  width: 311px;
+  height: 196px;
+  top: 9px;
+  padding: 10px 16px;
+  border: 4px solid #ead7b1;
+  z-index: 30;
+}
+
+.home__card-character {
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home__card-character img {
+  display: block;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.home__card--pc:not(.is-selected) .home__card-character img {
+  max-height: 94px;
+}
+
+.home__card--pc.is-selected .home__card-character img {
+  max-height: 141px;
+}
+
+.home__card-name {
+  width: 100%;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #54402a;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.home__card--pc.is-selected .home__card-name {
+  color: #fff0b0;
+  font-weight: 700;
+}
+
+/* =========================
+   PC 底部信息模块
+========================= */
+
+.home__bottom {
+  position: absolute;
+  top: 53.33%;
+  left: 4.17%;
+  right: 4.17%;
+  bottom: 8.89%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.home__media-panel,
+.home__support-panel {
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 24px 3.5%;
+  border: 1px solid rgba(56, 43, 32, 0.46);
+  background: rgba(241, 217, 194, 0.44);
+}
+
+.home__media-panel h2,
+.home__support-panel h2 {
+  margin: 0 0 24px;
+  color: #54402a;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: 700;
+}
+
+.home__media-placeholder,
+.home__support-placeholder {
+  width: 100%;
+  height: calc(100% - 48px);
+  min-height: 120px;
+  box-sizing: border-box;
+  border: 1px solid #5c4016;
+  border-radius: 10px;
+  background: #1c1814;
+}
+
+.home__media-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e5c07b;
+  font-size: 16px;
+  text-align: center;
+}
+
+.home__support-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 14px 16px;
+  text-align: center;
+}
+
+.home__support-placeholder p {
+  margin: 0;
+  color: #10b981;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.home__support-placeholder span {
+  color: #a89886;
+  font-size: 12px;
+}
+
+/* 页脚 */
+
+.home__footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8b6040;
+  background: rgba(44, 23, 8, 0.8);
+  font-size: 10px;
+  text-align: center;
+}
+
+/* =========================
+   Mobile 首页
+========================= */
+
+.home__carousel--mobile,
+.home__divider {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .home {
+    min-height: 981px;
+    height: auto;
     overflow: hidden;
-    box-sizing: border-box;
-    color: #54402a;
-    background: #f1e2c8 url("/assets/bg/asset_bg_home_pc.png") center / cover
-      no-repeat;
-    font-family: "Noto Sans SC", sans-serif;
+    background-image: url("/assets/bg/asset_bg_home_mobile.png");
+    background-position: top center;
+    background-size: 100% 1320px;
   }
-  
-  /* 顶部导航 */
-  
+
   .home__nav {
-    position: absolute;
-    z-index: 20;
-    top: 4.44%;
-    left: 4.17%;
-    right: 4.17%;
-    height: 7.22%;
-    min-height: 54px;
-    box-sizing: border-box;
-    padding: 0 2.4%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(241, 217, 194, 0.44);
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    height: 52px;
+    min-height: 52px;
+    padding: 0 16px;
+    background: rgba(44, 23, 8, 0.8);
   }
-  
+
   .home__brand {
-    color: #54402a;
-    font-size: 16px;
-    font-weight: 700;
+    color: #d4a843;
+    font-size: 12px;
+    white-space: nowrap;
   }
-  
+
   .home__nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    gap: 8px;
   }
-  
+
   .home__button {
-    min-width: 162px;
-    height: 36px;
-    box-sizing: border-box;
-    padding: 0 18px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 20px;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-  
-  .home__button--primary {
-    border: 0;
-    color: #fffdf8;
-    background: linear-gradient(180deg, #e0a23b 0%, #c58421 50%, #995e12 100%);
-    cursor: pointer;
-  }
-  
-  .home__button--secondary {
-    min-width: 162px;
-    border: 1px solid #d4a843;
-    color: #faf5ee;
-    background: #251e18;
-  }
-  
-  /* 九大体质卡片区 */
-  
-  .home__gallery {
-    position: absolute;
-    top: 13.33%;
-    left: 4.17%;
-    right: 4.17%;
-    height: 37.78%;
-    box-sizing: border-box;
-    padding: 24px 40px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    overflow: hidden;
-    border: 1px solid rgba(92, 64, 22, 0.62);
-    border-radius: 24px;
-    background: rgba(20, 17, 14, 0.1);
-  }
-  
-  .home__gallery-heading {
-    flex: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  .home__gallery-heading h1 {
-    margin: 0;
-    color: #5c4016;
-    font-size: 28px;
-    line-height: 34px;
-    font-weight: 700;
-    text-align: center;
-  }
-  
-  .home__gallery-hint {
-    margin: 0;
-    color: #bf9b74;
-    font-size: 13px;
-    line-height: 16px;
-    text-align: center;
-  }
-  
-  .home__gallery-hint--mobile,
-  .home__carousel--mobile {
-    display: none;
-  }
-  
-  /* PC 横向滚动 */
-  
-  .home__carousel--pc {
-    width: 100%;
-    min-height: 0;
-    flex: 1;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(92, 64, 22, 0.45) transparent;
-    overscroll-behavior-x: contain;
-  }
-  
-  .home__carousel-track {
-    width: max-content;
-    min-width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 4px 12px;
-    box-sizing: border-box;
-  }
-  
-  .home__card {
-    flex: none;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    overflow: hidden;
-    border: 2px solid #e5c07b;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  
-  .home__card--pc {
-    width: 220px;
-    height: 138px;
-    padding: 10px 16px;
-    gap: 8px;
-  }
-  
-  .home__card--peaceful.home__card--pc {
-    width: 311px;
-    height: 196px;
-    border: 4px solid #ead7b1;
-    padding: 10px 16px;
-  }
-  
-  .home__card-character {
-    width: 100%;
-    min-height: 0;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .home__card-character img {
-    display: block;
-    width: auto;
-    height: 100%;
-    max-width: 100%;
-    object-fit: contain;
-  }
-  
-  .home__card--pc:not(.home__card--peaceful) .home__card-character img {
-    max-height: 94px;
-  }
-  
-  .home__card--peaceful.home__card--pc .home__card-character img {
-    max-height: 141px;
-  }
-  
-  .home__card-name {
-    width: 100%;
-    min-height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #54402a;
-    font-size: 13px;
-    line-height: 16px;
-    text-align: center;
-    white-space: nowrap;
-  }
-  
-  .home__card--peaceful .home__card-name {
-    color: #fff0b0;
-    font-weight: 700;
-  }
-  
-  /* PC 底部两个信息模块 */
-  
-  .home__bottom {
-    position: absolute;
-    top: 53.33%;
-    left: 4.17%;
-    right: 4.17%;
-    bottom: 8.89%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-  }
-  
-  .home__media-panel,
-  .home__support-panel {
     min-width: 0;
-    box-sizing: border-box;
-    padding: 24px 3.5%;
-    border: 1px solid rgba(56, 43, 32, 0.46);
-    background: rgba(241, 217, 194, 0.44);
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 14px;
+    font-size: 11px;
   }
-  
-  .home__media-panel {
-    margin-right: 0;
+
+  .home__button--primary {
+    width: 81px;
   }
-  
-  .home__support-panel {
-    margin-left: 0;
+
+  .home__button--secondary {
+    width: 68px;
+    border: 1px solid #d4a843;
+    color: #d4a843;
+    background: #2c1a06;
   }
-  
-  .home__media-panel h2,
-  .home__support-panel h2 {
-    margin: 0 0 24px;
-    color: #54402a;
+
+  .home__gallery {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    height: 420px;
+    margin-top: 8px;
+    padding: 0;
+    gap: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .home__gallery-heading {
+    position: relative;
+    z-index: 30;
+    height: 56px;
+    flex: none;
+    justify-content: center;
+  }
+
+  .home__gallery-heading h1 {
+    color: #3d2005;
     font-size: 18px;
     line-height: 22px;
-    font-weight: 700;
   }
-  
-  .home__media-placeholder,
-  .home__support-placeholder {
+
+  /* 彻底隐藏 PC 横向组件 */
+
+  .home__carousel--pc {
+    display: none;
+  }
+
+  /* Mobile 扇形卡片 */
+
+  .home__carousel--mobile {
+    position: relative;
+    display: block;
     width: 100%;
-    height: calc(100% - 48px);
-    min-height: 120px;
-    box-sizing: border-box;
-    border: 1px solid #5c4016;
-    border-radius: 10px;
-    background: #1c1814;
+    height: 350px;
+    overflow: hidden;
+    touch-action: pan-y;
+    user-select: none;
   }
-  
-  .home__media-placeholder {
-    display: flex;
+
+  .home__card--mobile {
+    width: 173px;
+    height: 241px;
+    left: calc(50% + var(--card-offset) * 43px);
+    top: calc(18px + var(--card-depth) * 15px);
+    padding: 12px 8px 10px;
+    border: 2px solid #c5a059;
+    border-radius: 16px;
+    transform:
+      translateX(-50%)
+      rotate(calc(var(--card-offset) * 4deg));
+    transform-origin: center center;
+    z-index: calc(10 - var(--card-depth));
+  }
+
+  .home__card--mobile .home__card-character {
+    width: 100%;
+    height: 164px;
+    flex: none;
     align-items: center;
     justify-content: center;
-    color: #e5c07b;
-    font-size: 16px;
-    text-align: center;
   }
-  
-  .home__support-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    padding: 14px 16px;
-    text-align: center;
+
+  .home__card--mobile .home__card-character img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
-  
-  .home__support-placeholder p {
-    margin: 0;
-    color: #10b981;
+
+  .home__card--mobile .home__card-name {
+    height: 27px;
+    min-height: 27px;
+    margin-top: 10px;
+    color: #54402a;
+    font-size: 13px;
+    line-height: 16px;
+    white-space: nowrap;
+  }
+
+  .home__card--mobile.is-selected {
+    width: 191px;
+    height: 267px;
+    left: 50%;
+    top: 8px;
+    padding: 20px 8px 12px;
+    border: 4px solid #ead7b1;
+    transform: translateX(-50%) rotate(0deg);
+    z-index: 30;
+  }
+
+  .home__card--mobile.is-selected .home__card-character {
+    height: 170px;
+  }
+
+  .home__card--mobile.is-selected .home__card-name {
+    height: 33px;
+    min-height: 33px;
+    margin-top: 12px;
+    color: #fff0b0;
     font-size: 15px;
     font-weight: 700;
   }
-  
-  .home__support-placeholder span {
-    color: #a89886;
-    font-size: 12px;
-  }
-  
-  /* 页脚 */
-  
-  .home__footer {
+
+  .home__divider {
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 40px;
+    top: 568px;
+    left: 20px;
+    display: block;
+    width: calc(100% - 40px);
+    height: 1px;
+    background: rgba(212, 184, 122, 0.4);
+  }
+
+  .home__bottom {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #8b6040;
-    background: rgba(44, 23, 8, 0.8);
+    flex-direction: column;
+    gap: 7px;
+    margin: 12px 20px 0;
+  }
+
+  .home__media-panel,
+  .home__support-panel {
+    width: 100%;
+    height: auto;
+    padding: 14px 16px;
+    border: 1px solid #d4b87a;
+    border-radius: 16px;
+    background: rgba(253, 246, 232, 0.8);
+  }
+
+  .home__media-panel {
+    height: 215px;
+  }
+
+  .home__support-panel {
+    height: 175px;
+  }
+
+  .home__media-panel h2,
+  .home__support-panel h2 {
+    margin: 0 0 10px;
+    color: #3d2005;
+    font-size: 12px;
+    line-height: 17px;
+    white-space: nowrap;
+  }
+
+  .home__media-placeholder {
+    height: 160px;
+    min-height: 0;
+    font-size: 13px;
+  }
+
+  .home__support-placeholder {
+    height: 120px;
+    min-height: 0;
+    gap: 8px;
+    padding: 14px 16px;
+  }
+
+  .home__support-placeholder p {
+    color: #10b981;
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .home__support-placeholder span {
+    color: #64748b;
     font-size: 10px;
-    text-align: center;
   }
-  
-  /* =========================
-     Mobile 首页
-  ========================= */
-  
-  @media (max-width: 600px) {
-    .home {
-      min-height: 981px;
-      height: auto;
-      overflow: hidden;
-      background-image: url("/assets/bg/asset_bg_home_mobile.png");
-      background-position: top center;
-      background-size: 100% 1320px;
-    }
-  
-    .home__nav {
-      position: relative;
-      top: auto;
-      left: auto;
-      right: auto;
-      width: 100%;
-      height: 52px;
-      min-height: 52px;
-      padding: 0 16px;
-      background: rgba(44, 23, 8, 0.8);
-    }
-  
-    .home__brand {
-      color: #d4a843;
-      font-size: 12px;
-      white-space: nowrap;
-    }
-  
-    .home__nav-actions {
-      gap: 8px;
-    }
-  
-    .home__button {
-      min-width: 0;
-      height: 28px;
-      padding: 0 12px;
-      border-radius: 14px;
-      font-size: 11px;
-    }
-  
-    .home__button--primary {
-      width: 81px;
-    }
-  
-    .home__button--secondary {
-      width: 68px;
-      border: 1px solid #d4a843;
-      color: #d4a843;
-      background: #2c1a06;
-    }
-  
-    .home__gallery {
-      position: relative;
-      top: auto;
-      left: auto;
-      right: auto;
-      width: 100%;
-      height: 420px;
-      margin-top: 8px;
-      padding: 0;
-      gap: 0;
-      overflow: hidden;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-    }
-  
-    .home__gallery-heading {
-      position: relative;
-      z-index: 5;
-      height: 56px;
-      gap: 4px;
-      justify-content: center;
-    }
-  
-    .home__gallery-heading h1 {
-      color: #3d2005;
-      font-size: 18px;
-      line-height: 22px;
-    }
-  
-    .home__gallery-hint--pc,
-    .home__carousel--pc {
-      display: none;
-    }
-  
-    .home__gallery-hint--mobile,
-    .home__carousel--mobile {
-      display: block;
-    }
-  
-    .home__gallery-hint {
-      color: #8b6040;
-      font-size: 11px;
-      line-height: 13px;
-    }
-  
-    .home__carousel--mobile {
-      position: relative;
-      width: 100%;
-      height: 350px;
-      overflow-x: auto;
-      overflow-y: hidden;
-      scrollbar-width: none;
-      overscroll-behavior-x: contain;
-      touch-action: pan-x;
-    }
-  
-    .home__carousel--mobile::-webkit-scrollbar {
-      display: none;
-    }
-  
-    .home__mobile-track {
-      position: relative;
-      width: 480px;
-      height: 340px;
-    }
-  
-    .home__card--mobile {
-      position: absolute;
-      width: 173px;
-      height: 241px;
-      padding: 12px 8px 10px;
-      border: 2px solid #c5a059;
-      border-radius: 16px;
-      transform-origin: center center;
-    }
-  
-    .home__card--mobile .home__card-character {
-      width: 100%;
-      height: 164px;
-      flex: none;
-      align-items: center;
-      justify-content: center;
-    }
-  
-    .home__card--mobile .home__card-character img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-  
-    .home__card--mobile .home__card-name {
-      height: 27px;
-      min-height: 27px;
-      margin-top: 10px;
-      color: #54402a;
-      font-size: 13px;
-      line-height: 16px;
-      white-space: nowrap;
-    }
-  
-    .home__card--peaceful.home__card--mobile {
-      z-index: 10;
-      width: 191px;
-      height: 267px;
-      padding: 20px 8px 12px;
-      border: 4px solid #ead7b1;
-    }
-  
-    .home__card--peaceful.home__card--mobile .home__card-character {
-      height: 170px;
-    }
-  
-    .home__card--peaceful.home__card--mobile .home__card-name {
-      height: 33px;
-      min-height: 33px;
-      margin-top: 12px;
-      color: #fff0b0;
-      font-size: 15px;
-      font-weight: 700;
-    }
-  
-    .home__divider {
-      position: absolute;
-      top: 568px;
-      left: 20px;
-      width: calc(100% - 40px);
-      height: 1px;
-      background: rgba(212, 184, 122, 0.4);
-    }
-  
-    .home__bottom {
-      position: relative;
-      top: auto;
-      left: auto;
-      right: auto;
-      bottom: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      margin: 12px 20px 0;
-    }
-  
-    .home__media-panel,
-    .home__support-panel {
-      width: 100%;
-      height: auto;
-      padding: 14px 16px;
-      border: 1px solid #d4b87a;
-      border-radius: 16px;
-      background: rgba(253, 246, 232, 0.8);
-    }
-  
-    .home__media-panel {
-      height: 215px;
-    }
-  
-    .home__support-panel {
-      height: 175px;
-    }
-  
-    .home__media-panel h2,
-    .home__support-panel h2 {
-      margin: 0 0 10px;
-      color: #3d2005;
-      font-size: 12px;
-      line-height: 17px;
-      white-space: nowrap;
-    }
-  
-    .home__media-placeholder {
-      height: 160px;
-      min-height: 0;
-      font-size: 13px;
-    }
-  
-    .home__support-placeholder {
-      height: 120px;
-      min-height: 0;
-      gap: 8px;
-      padding: 14px 16px;
-    }
-  
-    .home__support-placeholder p {
-      color: #10b981;
-      font-size: 12px;
-      font-weight: 400;
-    }
-  
-    .home__support-placeholder span {
-      color: #64748b;
-      font-size: 10px;
-    }
-  
-    .home__footer {
-      position: relative;
-      bottom: auto;
-      width: 100%;
-      height: 40px;
-      margin-top: 38px;
-      font-size: 10px;
-    }
+
+  .home__footer {
+    position: relative;
+    bottom: auto;
+    width: 100%;
+    height: 40px;
+    margin-top: 38px;
+    font-size: 10px;
   }
-  
+}

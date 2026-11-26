@@ -1,4 +1,4 @@
-
+import { useRef, useState } from "react";
 import "./HomePage.css";
 import { resultData, type ResultId } from "../data/result";
 
@@ -7,33 +7,99 @@ type HomePageProps = {
 };
 
 const cardOrder: ResultId[] = [
-  "damp_heat",
-  "blood_stasis",
-  "qi_stagnation",
-  "special_diathesis",
-  "peaceful",
-  "qi_deficiency",
-  "yang_deficiency",
-  "yin_deficiency",
-  "phlegm_dampness",
+  "phlegm_dampness", // 05 祛湿喵
+  "damp_heat", // 06 凉茶喵
+  "blood_stasis", // 07 通通喵
+  "qi_stagnation", // 08 逍遥喵
+  "special_diathesis", // 09 结界喵
+  "peaceful", // 01 天选喵
+  "qi_deficiency", // 02 快充喵
+  "yang_deficiency", // 03 暖暖喵
+  "yin_deficiency", // 04 水光喵
 ];
 
-const mobileCardLayout: Record<
-  ResultId,
-  { left: number; top: number; rotate: number }
-> = {
-  damp_heat: { left: 94, top: 143, rotate: -20 },
-  blood_stasis: { left: 116, top: 122, rotate: -16 },
-  qi_stagnation: { left: 142, top: 107, rotate: -12 },
-  special_diathesis: { left: 173, top: 98, rotate: -8 },
-  peaceful: { left: 217, top: 92, rotate: 0 },
-  qi_deficiency: { left: 246, top: 98, rotate: 8 },
-  yang_deficiency: { left: 260, top: 106, rotate: 12 },
-  yin_deficiency: { left: 271, top: 122, rotate: 16 },
-  phlegm_dampness: { left: 279, top: 143, rotate: 20 },
-};
+const initialIndex = cardOrder.indexOf("peaceful");
+
+function getOffset(index: number, activeIndex: number) {
+  let offset = index - activeIndex;
+
+  if (offset > 4) offset -= 9;
+  if (offset < -4) offset += 9;
+
+  return offset;
+}
 
 export default function HomePage({ onStart }: HomePageProps) {
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
+  const pcDragStart = useRef<number | null>(null);
+  const mobileDragStart = useRef<number | null>(null);
+  const dragged = useRef(false);
+
+  const selectNext = (direction: number) => {
+    setActiveIndex((current) => (current + direction + 9) % 9);
+  };
+
+  const selectCard = (index: number) => {
+    if (dragged.current) {
+      dragged.current = false;
+      return;
+    }
+    setActiveIndex(index);
+  };
+
+  const handlePcWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    const delta =
+      Math.abs(event.deltaX) > Math.abs(event.deltaY)
+        ? event.deltaX
+        : event.deltaY;
+
+    if (Math.abs(delta) > 8) {
+      event.preventDefault();
+      selectNext(delta > 0 ? 1 : -1);
+    }
+  };
+
+  const handlePcPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    pcDragStart.current = event.clientX;
+    dragged.current = false;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handlePcPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (pcDragStart.current === null) return;
+
+    const distance = event.clientX - pcDragStart.current;
+
+    if (Math.abs(distance) > 25) {
+      dragged.current = true;
+      selectNext(distance < 0 ? 1 : -1);
+    }
+
+    pcDragStart.current = null;
+  };
+
+  const handleMobilePointerDown = (
+    event: React.PointerEvent<HTMLDivElement>,
+  ) => {
+    mobileDragStart.current = event.clientX;
+    dragged.current = false;
+  };
+
+  const handleMobilePointerUp = (
+    event: React.PointerEvent<HTMLDivElement>,
+  ) => {
+    if (mobileDragStart.current === null) return;
+
+    const distance = event.clientX - mobileDragStart.current;
+
+    if (Math.abs(distance) > 30) {
+      dragged.current = true;
+      selectNext(distance < 0 ? 1 : -1);
+    }
+
+    mobileDragStart.current = null;
+  };
+
   return (
     <main className="home">
       <header className="home__nav">
@@ -57,79 +123,103 @@ export default function HomePage({ onStart }: HomePageProps) {
       <section className="home__gallery">
         <div className="home__gallery-heading">
           <h1>九大体质守护喵 · 全员集结</h1>
-          <p className="home__gallery-hint home__gallery-hint--pc">
-            点击查看更多守护喵
-          </p>
-          <p className="home__gallery-hint home__gallery-hint--mobile">
-            滑动查看更多守护喵
-          </p>
         </div>
 
-        <div className="home__carousel home__carousel--pc">
-          <div className="home__carousel-track">
-            {cardOrder.map((id) => {
-              const profile = resultData[id];
+        {/* PC 卡片组件 */}
+        <div
+          className="home__carousel home__carousel--pc"
+          onWheel={handlePcWheel}
+          onPointerDown={handlePcPointerDown}
+          onPointerUp={handlePcPointerUp}
+          onPointerCancel={() => {
+            pcDragStart.current = null;
+          }}
+        >
+          {cardOrder.map((id, index) => {
+            const profile = resultData[id];
+            const offset = getOffset(index, activeIndex);
+            const selected = offset === 0;
 
-              return (
-                <article
-                  className={`home__card home__card--pc ${
-                    id === "peaceful" ? "home__card--peaceful" : ""
-                  }`}
-                  key={id}
-                  style={{
-                    backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.2), rgba(0,0,0,.2)), url("${profile.background.pc}")`,
-                  }}
-                >
-                  <div className="home__card-character">
-                    <img
-                      src={profile.characterImage}
-                      alt={profile.characterName}
-                    />
-                  </div>
-                  <div className="home__card-name">
-                    {profile.typeName} | {profile.characterName}
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+            return (
+              <button
+                type="button"
+                className={`home__card home__card--pc ${
+                  selected ? "is-selected" : ""
+                } ${id === "peaceful" ? "is-peaceful" : ""}`}
+                key={id}
+                onClick={() => selectCard(index)}
+                aria-label={`选择${profile.typeName} ${profile.characterName}`}
+                aria-pressed={selected}
+                style={
+                  {
+                    "--card-offset": offset,
+                    "--card-depth": Math.abs(offset),
+                    "--card-bg": `url("${profile.background.pc}")`,
+                  } as React.CSSProperties
+                }
+              >
+                <div className="home__card-character">
+                  <img
+                    src={profile.characterImage}
+                    alt={profile.characterName}
+                    draggable={false}
+                  />
+                </div>
+
+                <div className="home__card-name">
+                  {profile.typeName} | {profile.characterName}
+                </div>
+              </button>
+            );
+          })}
         </div>
 
-        <div className="home__carousel home__carousel--mobile">
-          <div className="home__mobile-track">
-            {cardOrder.map((id) => {
-              const profile = resultData[id];
-              const layout = mobileCardLayout[id];
-              const isPeaceful = id === "peaceful";
+        {/* Mobile 扇形卡片组件 */}
+        <div
+          className="home__carousel home__carousel--mobile"
+          onPointerDown={handleMobilePointerDown}
+          onPointerUp={handleMobilePointerUp}
+          onPointerCancel={() => {
+            mobileDragStart.current = null;
+          }}
+        >
+          {cardOrder.map((id, index) => {
+            const profile = resultData[id];
+            const offset = getOffset(index, activeIndex);
+            const selected = offset === 0;
 
-              return (
-                <article
-                  className={`home__card home__card--mobile ${
-                    isPeaceful ? "home__card--peaceful" : ""
-                  }`}
-                  key={id}
-                  style={{
-                    left: `${layout.left}px`,
-                    top: `${layout.top}px`,
-                    transform: `rotate(${layout.rotate}deg)`,
-                    backgroundImage: `linear-gradient(0deg, rgba(0,0,0,.2), rgba(0,0,0,.2)), url("${profile.background.mobile}")`,
-                  }}
-                >
-                  <div className="home__card-character">
-                    <img
-                      src={profile.characterImage}
-                      alt={profile.characterName}
-                    />
-                  </div>
-                  <div className="home__card-name">
-                    {isPeaceful
-                      ? `${profile.typeName} | ${profile.characterName}`
-                      : `${profile.typeName}·${profile.characterName}`}
-                  </div>
-                </article>
-              );
-            })}
-          </div>
+            return (
+              <button
+                type="button"
+                className={`home__card home__card--mobile ${
+                  selected ? "is-selected" : ""
+                } ${id === "peaceful" ? "is-peaceful" : ""}`}
+                key={id}
+                onClick={() => selectCard(index)}
+                aria-label={`选择${profile.typeName} ${profile.characterName}`}
+                aria-pressed={selected}
+                style={
+                  {
+                    "--card-offset": offset,
+                    "--card-depth": Math.abs(offset),
+                    "--card-bg": `url("${profile.background.mobile}")`,
+                  } as React.CSSProperties
+                }
+              >
+                <div className="home__card-character">
+                  <img
+                    src={profile.characterImage}
+                    alt={profile.characterName}
+                    draggable={false}
+                  />
+                </div>
+
+                <div className="home__card-name">
+                  {profile.typeName}·{profile.characterName}
+                </div>
+              </button>
+            );
+          })}
         </div>
       </section>
 
@@ -147,7 +237,9 @@ export default function HomePage({ onStart }: HomePageProps) {
           <h2>🐾 星心解忧 · 青少年情绪关怀与心理支持服务</h2>
           <div className="home__support-placeholder">
             <p>已累计向心理健康公益捐助资金 万元</p>
-            <span>参与潮玩众筹，深圳市关爱行动公益基金会即捐赠 元</span>
+            <span>
+              参与潮玩众筹，深圳市关爱行动公益基金会即捐赠 元
+            </span>
           </div>
         </div>
       </section>
