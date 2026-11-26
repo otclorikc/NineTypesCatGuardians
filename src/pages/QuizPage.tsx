@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { groups, questions } from "../data/question";
 import "./QuizPage.css";
 
-const A = "/assets";
+const A = `${import.meta.env.BASE_URL}assets`;
 const STORAGE_KEY = "nine-types-quiz-progress";
 const LETTERS = ["A", "B", "C", "D"];
 
@@ -105,7 +105,11 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
       };
     }
 
-    if (second && first.score - second.score <= 1) {
+    if (
+      second &&
+      second.score >= 8 &&
+      first.score - second.score <= 3
+    ) {
       return {
         main: first.constitution,
         secondary: second.constitution,

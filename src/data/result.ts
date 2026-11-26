@@ -46,11 +46,15 @@ export interface ResultProfile {
     diagnosticNote: string;
   };
 }
+const A = `${import.meta.env.BASE_URL}assets`;
+
+const withBase = (path: string) =>
+  path.replace(/^\/assets\//, `${A}/`);
 
 const diagnosticNote =
-  "时愈堂诊断手册：题目每4题一组，分别为气虚、阳虚、阴虚、痰湿、湿热、血瘀、气郁、特禀。若有单组≥8分，则判定为该组体质。若全组＜8分，则判定为天选平和体质。";
+  "时愈堂诊断手册：题目每4题一组，分别为气虚、阳虚、阴虚、痰湿、湿热、血瘀、气郁、特禀。若全组＜8分，则诊断为天选平和质。若有单组≥8分，或单组最高分与其他组分差≥2，则为单一体质。若有两组≥8分，且分差≤1，则为双体质。";
 
-export const resultData: Record<ResultId, ResultProfile> = {
+const rawResultData: Record<ResultId, ResultProfile> = {
   peaceful: {
     id: "peaceful",
     typeName: "平和质",
@@ -66,9 +70,14 @@ export const resultData: Record<ResultId, ResultProfile> = {
     },
 
     coreTraits: [
-      "你是九种体质里最稀有的隐藏款。不是说你是完美的人，而是你的身体本身——它不偏不倚，刚刚好。就像一碗不冷不热的茶，喝下去哪儿都舒服。",
-      "别人熬夜要缓三天，你睡一觉就满血复活；别人换季鼻涕眼泪齐飞，你该干嘛干嘛；别人焦虑到失眠，你沾枕头就失去意识。",
-      "檐主认识你之后，福气都变多了——因为你这种体质的人，本身就是“好运”的代名词。你身边的人可能没意识到，但你就是那个“稳”字本身。你不需要刻意养生，因为你已经在做对的事情了。",
+      "恭喜你，解锁了时愈堂的隐藏款——平和质！",
+      "如果把生活比作一杯茶，你大概很懂得怎样找到自己喜欢的温度。不必特别浓烈，也不用刻意追求完美，刚刚好的状态，就已经很让人羡慕。",
+      "你身上有一种很舒服的稳定感。",
+      "忙的时候认真做事，闲下来的时候也愿意享受生活。遇到变化，你通常更愿意先看清情况，再决定下一步怎么走。",
+      "别人在各种生活方式之间反复横跳，你可能早已拥有一套适合自己的日常节奏。",
+      "最有意思的是，你不一定觉得自己有什么特别。", 
+      "毕竟在你看来，规律吃饭、好好休息、认真工作、偶尔出去玩，本来就是很自然的事情。"
+      "但能把平凡的日子过得自在，本身就是一种值得欣赏的生活智慧。"
     ],
 
     whisperTitle: "✦ 檐主的悄悄话",
@@ -450,3 +459,21 @@ export const resultData: Record<ResultId, ResultProfile> = {
     },
   },
 };
+export const resultData = Object.fromEntries(
+  Object.entries(rawResultData).map(([id, profile]) => [
+    id,
+    {
+      ...profile,
+      characterImage: withBase(profile.characterImage),
+      badgeImage: withBase(profile.badgeImage),
+      background: {
+        pc: withBase(profile.background.pc),
+        mobile: withBase(profile.background.mobile),
+      },
+      share: {
+        ...profile.share,
+        posterImage: withBase(profile.share.posterImage),
+      },
+    },
+  ])
+) as Record<ResultId, ResultProfile>;
