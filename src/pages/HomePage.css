@@ -634,3 +634,48 @@
     border-width: 2px;
   }
 }
+
+/* =========================================
+   HomePage 最终间距与缩放调整
+========================================= */
+
+/* PC */
+@media (min-width: 601px) {
+  /* 整个 PC 首页默认缩放至 0.8 */
+  .home {
+    width: 125%;
+    height: 125vh;
+    min-height: 125vh;
+    transform: scale(0.8);
+    transform-origin: top left;
+  }
+
+  /* 合照模块与下方模块拉开距离 */
+  .home__bottom {
+    top: calc(13.33% + max(40%, 360px) + 24px);
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* 视频、公益内容框统一在现有基础上再缩小30% */
+  .home__media-placeholder,
+  .home__support-placeholder {
+    width: 49%;
+    height: 49%;
+    min-height: 0;
+    margin: auto;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  /* 缩小合照模块下方多余的留白 */
+  .home__gallery {
+    height: 336px;
+  }
+
+  /* 合照模块与视频模块的间隔 */
+  .home__bottom {
+    margin-top: 17px;
+  }
+}
