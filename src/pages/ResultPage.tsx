@@ -23,7 +23,7 @@ const typeMap: Record<string, ResultId> = {
 };
 
 const defaultDiagnosticNote =
-  "时愈堂诊断手册：题目每4题一组，分别为气虚、阳虚、阴虚、痰湿、湿热、血瘀、气郁、特禀。若有单组≥8分，则判定为该组体质。若全组＜8分，则判定为天选平和体质。";
+  "时愈堂诊断手册：题目每4题一组，分别为气虚、阳虚、阴虚、痰湿、湿热、血瘀、气郁、特禀。若全组＜8分，则诊断为天选平和质。若最高分组≥8分，且第二高分组也≥8分、两组分差≤1，则判定为双体质；否则判定为单一主导体质。";
 
 export default function ResultPage({
   resultName,

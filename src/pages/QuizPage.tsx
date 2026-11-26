@@ -108,7 +108,7 @@ export default function QuizPage({ onComplete }: QuizPageProps) {
     if (
       second &&
       second.score >= 8 &&
-      first.score - second.score <= 3
+      first.score - second.score <= 1
     ) {
       return {
         main: first.constitution,
