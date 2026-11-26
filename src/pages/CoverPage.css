@@ -209,3 +209,19 @@
     pointer-events: none;
   }
 }
+/* Mobile：底部友情出诊文案随扉页等比例缩放 */
+@media (max-width: 600px) {
+  .cover__mobile-copy {
+    height: max(9.744vw, 4.502dvh);
+    padding: max(1.282vw, 0.592dvh)
+      max(1.026vw, 0.474dvh);
+    border-radius: max(2.564vw, 1.185dvh);
+    font-size: max(2.564vw, 1.185dvh);
+    line-height: 1.6;
+  }
+
+  .cover__mobile-copy p {
+    font-size: inherit;
+    line-height: inherit;
+  }
+}
