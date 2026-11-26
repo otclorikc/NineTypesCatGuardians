@@ -444,7 +444,7 @@ const [isDownloading, setIsDownloading] = useState(false);
               ×
             </button>
 
-            <h2>✦ 专属把脉结果海报已生成</h2>
+            <h2>✦ 专属把脉结果海报已生成 ✦</h2>
 
             <img
   ref={posterRef}

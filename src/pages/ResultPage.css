@@ -1317,3 +1317,42 @@
     transform: scale(0.8);
   }
 }
+
+/* 移动端分享弹窗：完整显示，不滚动 */
+@media (max-width: 767px) {
+  .result-share__panel {
+    max-height: calc(100dvh - 32px);
+    overflow: hidden;
+    gap: 10px;
+    padding: 24px 18px 16px;
+  }
+
+  /* 顶部文案：缩小字号，保持单行 */
+  .result-share__panel h2 {
+    margin: 8px 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  /* 海报：限制高度，避免挤出弹窗 */
+  .result-share__poster {
+    width: min(260px, 100%);
+    max-height: 46dvh;
+    object-fit: contain;
+    flex-shrink: 1;
+  }
+
+  /* 下载按钮稍微收紧 */
+  .result-share__download {
+    padding: 8px 20px;
+    flex-shrink: 0;
+  }
+
+  /* 底部文案：缩小字号，保持单行 */
+  .result-share__footer {
+    font-size: 9px;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+}
