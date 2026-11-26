@@ -1,7 +1,7 @@
-
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { resultData, type ResultId } from "../data/result";
 import "./ResultPage.css";
+import { toBlob } from "html-to-image";
 
 type ResultPageProps = {
   resultName: string;
@@ -49,6 +49,11 @@ export default function ResultPage({
     showSecondary && secondaryProfile
       ? secondaryProfile
       : primaryProfile;
+useLayoutEffect(() => {
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}, [profile.id]);
 
   const diagnosticNote =
     profile.pc?.diagnosticNote ||
@@ -58,6 +63,9 @@ export default function ResultPage({
   const badgeParts = profile.badgeText.trim().split(/\s+/);
   const badgeCaption = badgeParts[0];
   const badgeName = badgeParts.slice(1).join(" ");
+
+const posterRef = useRef<HTMLImageElement>(null);
+const [isDownloading, setIsDownloading] = useState(false);
 
   function viewSecondary() {
     setHasViewedSecondary(true);
@@ -69,8 +77,102 @@ export default function ResultPage({
   }
 
   function renderSecondaryControl(className: string) {
-    if (!secondaryProfile) return null;
+if (!secondaryProfile) return null;
 
+async function downloadPoster() {
+  const image = posterRef.current;
+  if (!image || isDownloading) return;
+
+  setIsDownloading(true);
+
+  try {
+    if (!image.complete) {
+      await new Promise<void>((resolve, reject) => {
+        image.addEventListener("load", () => resolve(), { once: true });
+        image.addEventListener(
+          "error",
+          () => reject(new Error("海报加载失败")),
+          { once: true }
+        );
+      });
+    }
+
+    if (!image.naturalWidth || !image.naturalHeight) {
+      throw new Error("海报图片无效");
+    }
+
+    let blob: Blob | null = null;
+
+    // 优先使用 html-to-image 生成 PNG
+    try {
+      blob = await toBlob(image, {
+        cacheBust: true,
+        width: image.naturalWidth,
+        height: image.naturalHeight,
+        pixelRatio: 1,
+        style: {
+          width: `${image.naturalWidth}px`,
+          height: `${image.naturalHeight}px`,
+          maxWidth: "none",
+          maxHeight: "none",
+        },
+      });
+    } catch (error) {
+      console.warn("海报截图生成失败，尝试获取原始图片", error);
+    }
+
+    // 截图失败时，回退到原始 PNG 图片
+    if (!blob || blob.type !== "image/png" || blob.size === 0) {
+      const response = await fetch(profile.share.posterImage, {
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error("无法获取海报图片");
+      }
+
+      const contentType = response.headers.get("content-type") || "";
+
+      if (!contentType.startsWith("image/")) {
+        throw new Error("服务器返回的不是图片文件");
+      }
+
+      blob = await response.blob();
+    }
+
+    // 检查文件确实是 PNG，而不是 HTML
+    const signature = new Uint8Array(
+      await blob.slice(0, 8).arrayBuffer()
+    );
+
+    const validPng =
+      signature[0] === 0x89 &&
+      signature[1] === 0x50 &&
+      signature[2] === 0x4e &&
+      signature[3] === 0x47;
+
+    if (!validPng) {
+      throw new Error("生成的文件不是有效 PNG");
+    }
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `share-poster-${profile.id}.png`;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    window.setTimeout(() => URL.revokeObjectURL(url), 60000);
+  } catch (error) {
+    console.error("海报下载失败：", error);
+    window.alert("海报生成失败，请重新打开分享弹窗后再试。");
+  } finally {
+    setIsDownloading(false);
+  }
+}
     return (
       <div className={className}>
         {!hasViewedSecondary ? (
@@ -232,10 +334,14 @@ export default function ResultPage({
 
           <div
             className={`result__mobile-badge-score ${
-              profile.id === "peaceful"
-                ? "result__mobile-badge-score--peaceful"
-                : "result__mobile-badge-score--other"
-            }`}
+  profile.id === "peaceful"
+    ? "result__mobile-badge-score--peaceful"
+    : "result__mobile-badge-score--other"
+} ${
+  ["special_diathesis", "blood_stasis", "damp_heat", "phlegm_dampness"].includes(profile.id)
+    ? "result__mobile-badge-score--title-accent"
+    : ""
+}`}
           >
             <span>{badgeCaption}</span>
 <strong>
@@ -359,18 +465,20 @@ export default function ResultPage({
             <h2>✦ 专属把脉结果海报已生成</h2>
 
             <img
-              className="result-share__poster"
-              src={profile.share.posterImage}
-              alt={profile.share.posterTitle}
-            />
+  ref={posterRef}
+  className="result-share__poster"
+  src={profile.share.posterImage}
+  alt={profile.share.posterTitle}
+/>
 
-            <a
-              className="result-share__download"
-              href={profile.share.posterImage}
-              download
-            >
-              下载高清海报
-            </a>
+            <button
+  className="result-share__download"
+  type="button"
+  onClick={downloadPoster}
+  disabled={isDownloading}
+>
+  下载高清海报
+</button>
 
             <p className="result-share__footer">
               异境凉茶铺｜九大体质檐主守护星｜深圳千雪影业有限公司

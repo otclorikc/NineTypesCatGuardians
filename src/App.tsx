@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import CoverPage from "./pages/CoverPage";
 import HomePage from "./pages/HomePage";
 import QuizPage from "./pages/QuizPage";
@@ -13,6 +12,11 @@ export default function App() {
   const [resultName, setResultName] = useState("");
   const [secondaryName, setSecondaryName] = useState("");
 
+useLayoutEffect(() => {
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}, [currentPage]);
   if (currentPage === "quiz") {
     return (
       <QuizPage
