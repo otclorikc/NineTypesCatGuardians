@@ -1,7 +1,7 @@
 
 import "./CoverPage.css";
 
-const A = "/assets";
+const A = `${import.meta.env.BASE_URL}assets`;
 
 type CoverPageProps = {
   onStart: () => void;
